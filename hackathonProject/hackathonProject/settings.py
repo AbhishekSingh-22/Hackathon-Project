@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from .info import *
 
@@ -19,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 EMAIL_USE_TLS = EMAIL_USE_TLS
 EMAIL_HOST=EMAIL_HOST
 EMAIL_HOST_USER=EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD= EMAIL_HOST_PASSWORD
+EMAIL_HOST_PASSWORD= EMAIL_HOST_PASSWORD    #Add password for Email functionality
 EMAIL_PORT= 587
 EMAIL_USE_SSL= False
 EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
@@ -128,6 +129,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Managing media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
