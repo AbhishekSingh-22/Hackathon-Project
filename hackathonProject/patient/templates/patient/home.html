@@ -12,7 +12,7 @@
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
   <!-- custom css -->
-  <link rel="stylesheet" href="{% static 'login/index/index.css' %}">
+  <link rel="stylesheet" href="{% static 'patient/home/index.css' %}">
 
   <!-- style sheet for animation -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -56,12 +56,11 @@
               </li>
             </ul>
           </li>
-          <li class="login px-4 mx-1">
+          {% comment %} <li class="login px-4 mx-1">
             <a class="btn btn-outline-success" href="/docsignin">For Doctors</a>
-          </li>
+          </li> {% endcomment %}
           <li class="">
-            <a class="btn btn btn-outline-success" href="/signin" role="button">Log
-              in</a>
+            <a class="btn btn btn-outline-success" href="/signout" role="button">Log out</a>
           </li>
           <!-- <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>

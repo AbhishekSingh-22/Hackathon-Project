@@ -15,8 +15,9 @@ from django.core.mail import EmailMessage,send_mail
 
 
 # Create your views here.
-def home(request):
+def index(request):
     return render(request, 'authentication/home.html')
+    # return redirect('user/')
 
 def signup(request):
     
@@ -26,7 +27,7 @@ def signup(request):
         fname=request.POST.get("fname")
         lname=request.POST.get("lname")
         email=request.POST.get("email")
-        password1=request.POST.get("password")
+        password=request.POST.get("password")
         # password2=request.POST.get("confirmPass")
 
         # Handling Exceptions in username
@@ -54,16 +55,23 @@ def signup(request):
         
         else:
             # Adding the details of user into User Database Table
-            myuser = User.objects.create_user(username, email, password1)
+            myuser = User.objects.create_user(username, email, password)
 
             myuser.first_name = fname
             myuser.last_name = lname
 
             myuser.save()
 
-            messages.success(request,"Your account has been successfully created !!!")
+            messages.success(request,"Hello "+ fname +", your account has been successfully created !!!")
 
-        
+            user=authenticate(username=username, password=password)         
+            #this will return a not none value is the user is authenticated otherwise it returns none if the user have entered the wrong credentials"""
+
+            if user is not None:
+                login(request, user)
+                # messages.success(request,"Logged in !")
+                return redirect("user/")
+                # login(request, myuser)
             
 
             # ------------------------------------------------ Welcome EMAIL-----------------------------------------------
@@ -75,7 +83,7 @@ def signup(request):
             send_mail(subject, message, from_email, to_list, fail_silently= True)
             #------------------------------------------------- Email sent -----------------------------------------------------
             
-            return render(request, 'authentication/home.html', {'fname': fname})
+            return redirect("user/")
 
 
 
@@ -95,8 +103,8 @@ def signin(request):
             login(request, user)
             messages.success(request,"Logged in !")
             myuser=User.objects.filter(username=username)
-            fname= myuser.first_name
-            return render(request, 'authentication/home.html', {'fname': fname})
+            # fname= myuser.first_name
+            return redirect("user/")
             
 
         else:
@@ -108,7 +116,7 @@ def signout(request):
     logout(request)
     messages.success(request, "You are successfully logged out")
 
-    return redirect('home')
+    return redirect('index')
 
 
 ################################### Function for doctor authentication ##################################################
@@ -123,14 +131,18 @@ def docsignin(request):
         user=authenticate(username=username, password=password)         
         #this will return a not none value is the user is authenticate otherwise it returns none if the user have entered the wrong credentials"""
 
+        
         if user is not None:
             login(request, user)
             messages.success(request,"Logged in !")
-            return render(request, 'authentication/home.html', {'name': username})
+            myuser=User.objects.filter(username=username)
+            # fname= myuser.first_name
+            return redirect("user/")
             
 
         else:
             messages.error(request, "Wrong Credentials")
+
 
     return render(request, 'authentication/DoctorLogin.html')
 
@@ -144,7 +156,7 @@ def docsignup(request):
         fname=request.POST.get("fname")
         lname=request.POST.get("lname")
         email=request.POST.get("email")
-        password1=request.POST.get("password")
+        password=request.POST.get("password")
         # password2=request.POST.get("confirmPass")
 
         # Handling Exceptions in username
@@ -172,14 +184,24 @@ def docsignup(request):
         
         else:
             # Adding the details of user into User Database Table
-            myuser = User.objects.create_user(username, email, password1)
+            myuser = User.objects.create_user(username, email, password)
         
             myuser.first_name = fname
             myuser.last_name = lname
 
             myuser.save()
 
-            messages.success(request,"Your account has been successfully created !!!")
+            messages.success(request,"Hello "+ fname +", your account has been successfully created !!!")
+
+
+            user=authenticate(username=username, password=password)         
+            #this will return a not none value is the user is authenticated otherwise it returns none if the user have entered the wrong credentials"""
+
+            if user is not None:
+                login(request, user)
+                # messages.success(request,"Logged in !")
+                return redirect("user/")
+                # login(request, myuser)
 
         
             
@@ -193,7 +215,7 @@ def docsignup(request):
             send_mail(subject, message, from_email, to_list, fail_silently= True)
             #------------------------------------------------- Email sent -----------------------------------------------------
             
-            return render(request, 'authentication/home.html', {'fname': fname})
+            return redirect("user/")
 
 
 
