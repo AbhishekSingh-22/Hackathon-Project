@@ -1,0 +1,194 @@
+   <!-- loading static files -->
+   {% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Doctors Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <!-- Custom Style sheet  -->
+    <link rel="stylesheet" href="{% static 'doctor/DoctorHomePage/index.css' %}">
+</head>
+
+<body>
+    <!-- _______________________________________________________________nav_bar_starts_here_______________________________________________________ -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-success fs-2 fw-bold" href="#">BookMyDoc.</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse position-absolute top-0 end-0 " id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-4 fs-4">
+                        <a class="nav-link active" aria-current="page" href="#">Appointments</a>
+                    </li>
+                    <li class="nav-item px-4 fs-4">
+                        <a class="nav-link" href="#">Approved Appointments</a>
+                    </li>
+                    <li class="nav-item px-4 fs-4">
+                        <a class="btn btn-outline-success" href="/signout" role="button">Log out</a>
+                    </li>
+                    <li class="nav-item px-4">
+                        <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+                                fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg></a>
+                    </li>
+                  
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- _______________________________________________________________nav_bar_ends_here_______________________________________________________ -->
+    <!-- __________________________________________________________________Alert section starts here_________________________________________________  -->
+
+    {% for message in messages%}
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        {{message}}  
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      
+  {% if not user.is_authenticated %}
+
+
+  
+  
+  {%endif%}
+    <!-- __________________________________________________________________Alert section ends here_________________________________________________  -->
+    <!-- _____________________________________________________________welcome Image starts __________________________________________________________________ -->
+
+    <!-- <img src="/images/welcome.jpg" class="img-fluid fixed-bg" alt="..."> -->
+    <div class="fixed-bg"></div>
+    <!-- _____________________________________________________________welcome Image ends__________________________________________________________________ -->
+    <!-- __________________________________________________________________appointments start here_________________________________________________ -->
+    <div class="bg-success-subtle ">
+        <div class="container  ">
+            <div class="text-center p-3 ">
+                <Strong class="text-success fs-3 ">Appointments</Strong>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mr Rahul Dubey</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mr Arun Kowachi</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mrs Swati Singh</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mrs Ritu Verma</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mr Nikhil Bharadwaj</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mr priyanshu Prajapati</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mrs Anjali</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mr Jethalal Gada</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mrs Babita</h5>
+                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
+                                in
+                                the form.</p>
+                            <a href="#" class="btn btn-outline-success">Approve</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- __________________________________________________________________appointments end here_________________________________________________ -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

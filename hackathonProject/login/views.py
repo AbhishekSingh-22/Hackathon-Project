@@ -134,10 +134,11 @@ def docsignin(request):
         
         if user is not None:
             login(request, user)
-            messages.success(request,"Logged in !")
+            drname = request.user.first_name
+            messages.success(request,"Hey Dr. "+ drname + ", We heartly welcome you to our website.")
             myuser=User.objects.filter(username=username)
             # fname= myuser.first_name
-            return redirect("user/")
+            return redirect("doctor/")
             
 
         else:
@@ -191,17 +192,9 @@ def docsignup(request):
 
             myuser.save()
 
-            messages.success(request,"Hello "+ fname +", your account has been successfully created !!!")
+            messages.success(request,"Hello, Dr. "+ fname +", your account has been successfully created !!!")
 
 
-            user=authenticate(username=username, password=password)         
-            #this will return a not none value is the user is authenticated otherwise it returns none if the user have entered the wrong credentials"""
-
-            if user is not None:
-                login(request, user)
-                # messages.success(request,"Logged in !")
-                return redirect("user/")
-                # login(request, myuser)
 
         
             
@@ -215,7 +208,16 @@ def docsignup(request):
             send_mail(subject, message, from_email, to_list, fail_silently= True)
             #------------------------------------------------- Email sent -----------------------------------------------------
             
-            return redirect("user/")
+            user=authenticate(username=username, password=password)         
+            #this will return a not none value is the user is authenticated otherwise it returns none if the user have entered the wrong credentials"""
+
+            if user is not None:
+                login(request, user)
+                # messages.success(request,"Logged in !")
+                return redirect("doctor/")
+                # login(request, myuser)
+            
+
 
 
 
