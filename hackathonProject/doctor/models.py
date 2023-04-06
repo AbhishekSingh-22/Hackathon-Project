@@ -5,37 +5,37 @@ from django.contrib.auth.models import User
 class doctordetail(models.Model):
 
     #Doctor's general details
-    duser = models.ForeignKey(User, on_delete=models.CASCADE)
+    # duser = models.ForeignKey(User, on_delete=models.CASCADE)
     dusername = models.CharField(max_length=255)
     fname = models.CharField(max_length=50)
     lname = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
-    contact = models.BigIntegerField()
-    image = models.ImageField(upload_to="doctor/images", default='')
-    specialization = models.CharField(max_length=100)
-    specdegree = models.FileField(upload_to="doctor/files", default='')
-    license = models.FileField(upload_to="doctor/files", default='')
+    contact = models.BigIntegerField(default=0)
+    image = models.ImageField(upload_to="doctor/images", default='', null=True)
+    specialization = models.CharField(max_length=100, default='', null=True)
+    specdegree = models.FileField(upload_to="doctor/files", default='', null=True)
+    license = models.FileField(upload_to="doctor/files", default='', null=True)
 
     # When doctor is available
-    fromtime = models.CharField(max_length=5)
-    totime = models.CharField(max_length=5)
+    fromtime = models.CharField(max_length=5, default='', null=True)
+    totime = models.CharField(max_length=5, default= '', null=True)
 
     #avg amount of time required to see a patient
-    avgtime= models.CharField(max_length=20)
+    avgtime= models.CharField(max_length=20,default= '', null=True)
 
     # Doctor's Home address details
-    housenum= models.CharField(max_length= 75)
-    hcity = models.CharField(max_length=20)
-    hlandmark = models.CharField(max_length=50)
-    hzip = models.IntegerField(default=0)
-    hstate = models.CharField(max_length=50)
+    housenum= models.CharField(max_length= 75,default= '', null=True)
+    hcity = models.CharField(max_length=20,default= '', null=True)
+    hlandmark = models.CharField(max_length=50,default= '', null=True)
+    hzip = models.IntegerField(default=0, null=True)
+    hstate = models.CharField(max_length=50,default= '', null=True)
 
     #Doctor's clinic/hospital address details
-    clocation= models.CharField(max_length= 75)
-    ccity = models.CharField(max_length=20)
-    clandmark = models.CharField(max_length=50)
-    czip = models.IntegerField(default=0)
-    cstate = models.CharField(max_length=50)
+    clocation= models.CharField(max_length= 75,default= '', null=True)
+    ccity = models.CharField(max_length=20,default= '', null=True)
+    # clandmark = models.CharField(max_length=50,default= None)
+    czip = models.IntegerField(default=0, null=True)
+    cstate = models.CharField(max_length=50,default= '', null=True)
 
     # name = 'Dr. '+ fname + ' '+ lname
 
