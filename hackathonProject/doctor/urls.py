@@ -7,6 +7,7 @@ from . import views                                            # Importing views
 urlpatterns = [
     path('', views.doctorhome, name="doctorhome"), 
     path('doctordetailform', views.doctordetailform, name="doctordetailform"), 
+    path('doctorapproved', views.doctorapproved, name="doctorapproved"), 
 
 
 ]       

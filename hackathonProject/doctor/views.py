@@ -52,6 +52,7 @@ def doctordetailform(request):
         specialization=request.POST.get("specialization")
         specdegree=request.POST.get("specdegree")
         license=request.POST.get("license")
+        desc=request.POST.get("desc")
         fromtime=request.POST.get("fromtime")
         totime=request.POST.get("totime")
         avgtime=request.POST.get("avgtime")
@@ -66,11 +67,20 @@ def doctordetailform(request):
         cstate=request.POST.get("cstate")
 
         # updating values in doctorForm
+        if 'Dr.'.upper() in fname:
+            particular_doc.fname=fname
+
+        else:
+            fname= 'Dr. '+ fname
+            particular_doc.fname=fname
+
+            
         particular_doc.contact = contact
         particular_doc.image = image
         particular_doc.specialization = specialization
         particular_doc.specdegree = specdegree
         particular_doc.license = license
+        particular_doc.desc = desc
         particular_doc.fromtime = fromtime
         particular_doc.totime = totime
         particular_doc.avgtime = avgtime
@@ -103,6 +113,7 @@ def doctordetailform(request):
         'specialization': particular_doc.specialization,
         'specdegree': particular_doc.specdegree,
         'license': particular_doc.license,
+        'desc': particular_doc.desc,
         'avgtime': particular_doc.avgtime,
         'housenum': particular_doc.housenum,
         'hcity': particular_doc.hcity,
@@ -122,3 +133,7 @@ def doctordetailform(request):
 
     return render(request, 'doctor/DoctorDetailForm.html', params)
     # return redirect('user/')
+
+
+def doctorapproved(request):
+    return render(request, "doctor/Approved.html")

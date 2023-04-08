@@ -7,7 +7,7 @@ class doctordetail(models.Model):
     #Doctor's general details
     # duser = models.ForeignKey(User, on_delete=models.CASCADE)
     dusername = models.CharField(max_length=255)
-    fname = models.CharField(max_length=50)
+    fname = models.CharField(max_length=50, null=True)
     lname = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
     contact = models.BigIntegerField(default=0)
@@ -15,6 +15,9 @@ class doctordetail(models.Model):
     specialization = models.CharField(max_length=100, default='', null=True)
     specdegree = models.FileField(upload_to="doctor/files", default='', null=True)
     license = models.FileField(upload_to="doctor/files", default='', null=True)
+
+    #Description of doctor in detail
+    desc = models.CharField(max_length=500,default='', null=True)
 
     # When doctor is available
     fromtime = models.CharField(max_length=5, default='', null=True)

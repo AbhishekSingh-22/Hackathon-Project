@@ -17,34 +17,59 @@
 
 <body>
     <!-- _______________________________________________________________nav_bar_starts_here_______________________________________________________ -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary position-sticky">
         <div class="container-fluid">
-            <a class="navbar-brand text-success fs-2 fw-bold" href="#">BookMyDoc.</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand fs-3 fw-bold text-success" href="#">BookMyDoc.</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse position-absolute top-0 end-0 " id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item px-4 fs-4">
-                        <a class="nav-link active" aria-current="page" href="#">Appointments</a>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <!-- <form class="d-flex " role="search"> -->
+
+                <input class="form-control me-2 w-50 px-3 " type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+
+                <!-- </form> -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-3 ">
+                        <a class="nav-link active" aria-current="page" href="doctorhome">Appointments</a>
                     </li>
-                    <li class="nav-item px-4 fs-4">
-                        <a class="nav-link" href="#">Approved Appointments</a>
+                    <li class="nav-item px-3 ">
+                        <a class="nav-link" href="doctorapproved">Approved</a>
                     </li>
-                    <li class="nav-item px-4 fs-4">
-                        <a class="btn btn-outline-success" href="/signout" role="button">Log out</a>
+                    <li class="nav-item px-3 ">
+                        <a class="nav-link" href="#reviews">Reviews</a>
                     </li>
-                    <li class="nav-item px-4">
-                        <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
-                                fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <li class="nav-item px-3 ">
+                        <a class="btn btn-outline-success" href="/signout">Log Out</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="nav-item px-3 ">
+                        <a class="btn btn-outline-success " href="#"><svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                height="" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                                 <path fill-rule="evenodd"
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg></a>
                     </li>
-                  
+
                 </ul>
+
             </div>
         </div>
     </nav>
@@ -68,10 +93,10 @@
     <!-- _____________________________________________________________welcome Image starts __________________________________________________________________ -->
 
     <!-- <img src="/images/welcome.jpg" class="img-fluid fixed-bg" alt="..."> -->
-    <div class="fixed-bg"></div>
+    <img src="{% static 'doctor/DoctorHomePage/WelcomeDoctor.png' %}" alt="welcome" class="img-fluid h-50 ">
     <!-- _____________________________________________________________welcome Image ends__________________________________________________________________ -->
     <!-- __________________________________________________________________appointments start here_________________________________________________ -->
-    <div class="bg-success-subtle ">
+    <div class="bg-success-subtle pb-4" id="Appointments" data-aos="fade-up">
         <div class="container  ">
             <div class="text-center p-3 ">
                 <Strong class="text-success fs-3 ">Appointments</Strong>
@@ -81,10 +106,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr Rahul Dubey</h5>
+                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button class="btn btn-outline-success approvebtn" id="apr1">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button href="#" class="btn btn-outline-success float-end">View More</button>
                         </div>
                     </div>
                 </div>
@@ -92,10 +123,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr Arun Kowachi</h5>
+                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button  class="btn btn-outline-success approvebtn" id="apr2">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button  class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -103,10 +141,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mrs Swati Singh</h5>
+                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button class="btn btn-outline-success approvebtn" id="apr3">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button  class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -116,10 +161,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mrs Ritu Verma</h5>
+                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button  class="btn btn-outline-success approvebtn" id="apr4">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -127,10 +179,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr Nikhil Bharadwaj</h5>
+                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button class="btn btn-outline-success approvebtn" id="apr5">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -138,10 +197,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr priyanshu Prajapati</h5>
+                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button  class="btn btn-outline-success approvebtn" id="apr6">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button  class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -151,10 +217,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mrs Anjali</h5>
+                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button class="btn btn-outline-success approvebtn" id="apr7">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button  class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -162,10 +235,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr Jethalal Gada</h5>
+                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button class="btn btn-outline-success approvebtn" id="apr8">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button  class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -173,10 +253,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mrs Babita</h5>
+                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
                             <p class="card-text">Here we will write a brief detail of the problems given by the patient
                                 in
                                 the form.</p>
-                            <a href="#" class="btn btn-outline-success">Approve</a>
+                            <button  class="btn btn-outline-success approvebtn" id="apr9">Approve</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Cancel
+                            </button>
+                            <button  class="btn btn-outline-success float-end">View More</button>
+
                         </div>
                     </div>
                 </div>
@@ -184,11 +271,146 @@
         </div>
     </div>
     </div>
+        <!-- __________________________________________________________________for contents inside Modal start_____________________________________ -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tell us the reason.</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+    
+                    <div class="modal-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Proffesional Burnout
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Personal Emergency
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Proffesional obligation
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Health Issues
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Overbooking and scheduling conflicts
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Administrative issues
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Technical Difficulties
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Staffing Shortage
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                others
+                            </label>
+                        </div>
+    
+    
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Please explain the reason
+                                elaboratly. <span class="fw-light">(will not be shared by user)</span></label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- __________________________________________________________________for contents inside Modal end_____________________________________ -->
     <!-- __________________________________________________________________appointments end here_________________________________________________ -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
+
+    <script>
+        let approvebtn1 = document.querySelector("#apr1");
+        let approvebtn2 = document.querySelector("#apr2");
+        let approvebtn3 = document.querySelector("#apr3");
+        let approvebtn4 = document.querySelector("#apr4");
+        let approvebtn5 = document.querySelector("#apr5");
+        let approvebtn6 = document.querySelector("#apr6");
+        let approvebtn7 = document.querySelector("#apr7");
+        let approvebtn8 = document.querySelector("#apr8");
+        let approvebtn9 = document.querySelector("#apr9");
+            
+        let Cancelhtml=`<a href="#" class="btn btn-outline-danger">Cancel</a>`;
+    
+    
+        function Approve(e){
+        btn_id = document.getElementById(e.target.id)
+            
+            
+        if (btn_id.innerHTML == "Approve"){
+            btn_id.innerHTML = "Approved"
+            btn_id.setAttribute("class", "btn btn-success")
+        }
+    
+        else{
+                btn_id.innerHTML = "Approve"
+                btn_id.setAttribute("class", "btn btn-outline-success")
+        }
+        }    
+    
+        approvebtn1.addEventListener("click", Approve);
+        approvebtn2.addEventListener("click", Approve);
+        approvebtn3.addEventListener("click", Approve);
+        approvebtn4.addEventListener("click", Approve);
+        approvebtn5.addEventListener("click", Approve);
+        approvebtn6.addEventListener("click", Approve);
+        approvebtn7.addEventListener("click", Approve);
+        approvebtn8.addEventListener("click", Approve);
+        approvebtn9.addEventListener("click", Approve);
+            
+    
+    </script>
+
+
+
 </body>
 
 </html>

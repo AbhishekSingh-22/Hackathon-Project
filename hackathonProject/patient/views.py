@@ -11,9 +11,16 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes,force_str
 from django.core.mail import EmailMessage,send_mail
+from doctor.models import doctordetail
 
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'patient/home.html')
+
+    doctorTable = doctordetail.objects.all()
+
+    params={}
+    params['doctorTable']=doctorTable
+
+    return render(request, 'patient/home.html',params)

@@ -229,17 +229,19 @@
     <h2 class="h1 ">DOCTORS</h2>
 
     <div class="row ">
+      {% for doc in doctorTable%}
       <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card" style="width: 25rem;">
-          <img src="{% static 'login/index/doc-1.jpg' %}" class="card-img-top" alt="...">
+          <img src="/media/doctor/images/{{doc.image}}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Dr Abhishek Singh</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
+            <h5 class="card-title">{{doc.fname}}</h5>
+            <p class="card-text">Specialization : {{doc.specialization}}</p>
+            <p class="card-text">{{doc.desc}}</p>
             <a href="#" class="btn btn-success">BOOK NOW</a>
           </div>
         </div>
       </div>
+      {% endfor %}
       <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card" style="width: 25rem;">
           <img src="{% static 'login/index/doc-2.jpg' %}" class="card-img-top" alt="...">

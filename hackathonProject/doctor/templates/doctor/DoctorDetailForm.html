@@ -103,6 +103,15 @@
         </div>
       </div>
 
+      <div class="col-md-12 position-relative">
+        <label for="exampleFormControlTextarea1" class="form-label">Please Tell us about your degree an
+            experience in brief. <span class="fw-light">(will be shared with users)</span></label>
+        <textarea class="form-control" id="validationTooltip22" rows="3" name="desc" value={{desc}} required></textarea>
+        <div class="valid-tooltip">
+            Looks good!
+        </div>
+    </div>
+
       <!-- ___________________________________________________________ basic credentils ends here___________________________________________________ -->
 
       <!-- ____________________________________________________________________time________________________________________________ -->
@@ -289,11 +298,45 @@
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <button class="btn btn-outline-success" type="submits">
+
+
+      <!-- #################################################### -->
+      <!-- <div class="col-12">
+        <button class="btn btn-outline-success" type="submit">
           Submit form
         </button>
-      </div>
+      </div> -->
+      <!-- ##################################333333333333333333 -->
+
+
+
+      <div class="col-12">
+        <!-- <button class="btn btn-outline-success" type="submit">Submit form</button> -->
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+            data-bs-target="#exampleModal-1">
+            submit
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal-1" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure !!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Please check if the details filled by you is correct to the best of your knowledge.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-outline-success" type="submit">Submit form</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
   </div>
   <!--_________________________________________________________ form ends here_____________________________________________________________ -->
