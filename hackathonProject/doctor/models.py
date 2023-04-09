@@ -11,10 +11,10 @@ class doctordetail(models.Model):
     lname = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
     contact = models.BigIntegerField(default=0)
-    image = models.ImageField(upload_to="doctor/images", default='', null=True)
+    image = models.ImageField(upload_to="doctor/images", default='')
     specialization = models.CharField(max_length=100, default='', null=True)
-    specdegree = models.FileField(upload_to="doctor/files", default='', null=True)
-    license = models.FileField(upload_to="doctor/files", default='', null=True)
+    specdegree = models.FileField(upload_to="doctor/files", default='')
+    license = models.FileField(upload_to="doctor/files", default='')
 
     #Description of doctor in detail
     desc = models.CharField(max_length=500,default='', null=True)

@@ -11,7 +11,9 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes,force_str
 from django.core.mail import EmailMessage,send_mail
-
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.core.files.base import ContentFile
 
 from .models import doctordetail                    # Importing doctordetail table/model
 
@@ -45,13 +47,13 @@ def doctordetailform(request):
     if request.method=="POST":
         
         # Extracting values from form
-        fname=request.POST.get("fname")
+        # fname=request.POST.get("fname")
         
         contact =request.POST.get("contact")
-        image=request.POST.get("image")
+        image=request.FILES.get("image")
         specialization=request.POST.get("specialization")
-        specdegree=request.POST.get("specdegree")
-        license=request.POST.get("license")
+        specdegree=request.FILES.get("specdegree")
+        license=request.FILES.get("license")
         desc=request.POST.get("desc")
         fromtime=request.POST.get("fromtime")
         totime=request.POST.get("totime")
@@ -66,20 +68,42 @@ def doctordetailform(request):
         czip=request.POST.get("czip")
         cstate=request.POST.get("cstate")
 
-        # updating values in doctorForm
-        if 'Dr.'.upper() in fname:
-            particular_doc.fname=fname
+        #----------------- updating values in doctorForm==================
+
+        #Assigning Dr. tag to fname
+        firstName= request.user.first_name
+        if 'Dr.'.upper() in firstName:
+            particular_doc.fname=firstName
 
         else:
-            fname= 'Dr. '+ fname
-            particular_doc.fname=fname
+            firstName= 'Dr. '+ firstName
+            particular_doc.fname=firstName
 
             
         particular_doc.contact = contact
-        particular_doc.image = image
+
+        # managaing Image file
+        if image:
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT)
+            file_path = fs.save('doctor/images/' + image.name, ContentFile(image.read()))
+        # particular_doc.image = image
+
+
+
         particular_doc.specialization = specialization
-        particular_doc.specdegree = specdegree
-        particular_doc.license = license
+
+        # Managing Files
+        if specdegree:
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT)
+            file_path = fs.save('doctor/files/' + specdegree.name, specdegree)
+        # particular_doc.specdegree = specdegree
+
+        if license:
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT)
+            file_path = fs.save('doctor/files/' + license.name, license)
+
+        # particular_doc.license = license
+
         particular_doc.desc = desc
         particular_doc.fromtime = fromtime
         particular_doc.totime = totime
