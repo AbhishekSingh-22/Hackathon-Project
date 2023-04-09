@@ -86,7 +86,7 @@ def doctordetailform(request):
         if image:
             fs = FileSystemStorage(location=settings.MEDIA_ROOT)
             file_path = fs.save('doctor/images/' + image.name, ContentFile(image.read()))
-        # particular_doc.image = image
+            particular_doc.image = image
 
 
 
@@ -96,13 +96,13 @@ def doctordetailform(request):
         if specdegree:
             fs = FileSystemStorage(location=settings.MEDIA_ROOT)
             file_path = fs.save('doctor/files/' + specdegree.name, specdegree)
-        # particular_doc.specdegree = specdegree
+            particular_doc.specdegree = specdegree
 
         if license:
             fs = FileSystemStorage(location=settings.MEDIA_ROOT)
             file_path = fs.save('doctor/files/' + license.name, license)
 
-        # particular_doc.license = license
+            particular_doc.license = license
 
         particular_doc.desc = desc
         particular_doc.fromtime = fromtime
