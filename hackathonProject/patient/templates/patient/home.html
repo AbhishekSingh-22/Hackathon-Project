@@ -229,20 +229,25 @@
     <h2 class="h1 ">DOCTORS</h2>
 
     <div class="row ">
-      {% for doc in doctorTable%}
+      {% for doc in doctorTable %}
       <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card" style="width: 25rem;">
-          <img src="/media/doctor/images/{{doc.image}}" class="card-img-top" alt="...">
+          <img src="/media/{{doc.image}}" class="card-img-top" alt="..." width="398.4" height="265.39">
           <div class="card-body">
             <h5 class="card-title">{{doc.fname}}</h5>
             <p class="card-text">Specialization : {{doc.specialization}}</p>
             <p class="card-text">{{doc.desc}}</p>
-            <a href="#" class="btn btn-success">BOOK NOW</a>
+            <!-- <a href="form" class="btn btn-success" >Book now</a> -->
+            <form action="/user/updatebookingads" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="doctorusername" value="{{doc.dusername}}">
+              <button type="submit" class="btn btn-success">BOOK NOW</button>
+           </form>
           </div>
         </div>
       </div>
       {% endfor %}
-      <div class="col-sm-4 mb-3 mb-sm-0">
+      <!-- <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card" style="width: 25rem;">
           <img src="{% static 'login/index/doc-2.jpg' %}" class="card-img-top" alt="...">
           <div class="card-body">
@@ -265,7 +270,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
     <div class="row">
