@@ -23,6 +23,10 @@ class doctordetail(models.Model):
     fromtime = models.CharField(max_length=5, default='', null=True)
     totime = models.CharField(max_length=5, default= '', null=True)
 
+    eveningfromtime = models.CharField(max_length=5, default='', null=True)
+    eveningtotime = models.CharField(max_length=5, default= '', null=True)
+
+
     #avg amount of time required to see a patient
     avgtime= models.CharField(max_length=20,default= '', null=True)
 
@@ -52,5 +56,6 @@ class doctordetail(models.Model):
 # Model for handling slot data of each doctor    
 class slot_table(models.Model):
     doc_username = models.CharField(max_length=50, null = True)
-    slotDict = models.JSONField()
+    morningslotDict = models.JSONField(null=True, default = None)
+    eveningslotDict = models.JSONField(null=True, default = None)
     date = models.DateField(null=True)

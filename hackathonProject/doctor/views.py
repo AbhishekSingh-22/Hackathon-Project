@@ -57,6 +57,8 @@ def doctordetailform(request):
         desc=request.POST.get("desc")
         fromtime=request.POST.get("fromtime")
         totime=request.POST.get("totime")
+        eveningfromtime=request.POST.get("eveningfromtime")
+        eveningtotime=request.POST.get("eveningtotime")
         avgtime=request.POST.get("avgtime")
         housenum=request.POST.get("housenum")
         hcity=request.POST.get("hcity")
@@ -107,6 +109,8 @@ def doctordetailform(request):
         particular_doc.desc = desc
         particular_doc.fromtime = fromtime
         particular_doc.totime = totime
+        particular_doc.eveningfromtime = eveningfromtime
+        particular_doc.eveningtotime = eveningtotime
         particular_doc.avgtime = avgtime
         particular_doc.housenum = housenum
         particular_doc.hcity = hcity
@@ -194,8 +198,82 @@ def doctordetailform(request):
                 total_hrs = total_hrs+1
         
         print(SLOT)
+                    
+                    
+                    ####---------------------------------- Slot calculation Evening----------------------------------#####
+    
+        # Extracting time in string
+        eveningfromhrs, eveningfrommin = eveningfromtime.split(':')
+        eveningtohrs, eveningtomin = eveningtotime.split(':')
 
-        slot_instance = slot_table(slotDict=SLOT, doc_username = request.user.username)
+        # Converting time to int
+        # fromhrs = int(fromhrs)
+        # frommin = int(frommin)
+        # tohrs = int(tohrs)
+        # tomin = int(tomin)
+
+        # Storing avg time in int format
+        avgtime = int(avgtime)
+        
+        totalmins= (abs(int(eveningfromhrs)- int(eveningtohrs))*60 )+ abs(int(eveningfrommin)-int(eveningtomin))
+        Totalslots = totalmins//avgtime
+
+        eveningslot=[str(eveningfromhrs)+':'+str(eveningfrommin)]
+
+        for i in range(1,Totalslots+1):
+            eveningfromhrs, eveningfrommin=eveningslot[i-1].split(':')
+            if int(eveningfrommin)+avgtime < 60:
+
+                addedmins = int(eveningfrommin)+avgtime
+                createdSlot =(eveningfromhrs +':'+str(addedmins))
+                eveningslot.append(createdSlot)
+            
+            elif int(eveningfrommin)+avgtime ==  60:
+                addedhrs = (int(eveningfromhrs)+1)
+                addedhrs = str(addedhrs)
+                if len(addedhrs)==1:
+                    addedhrs = '0'+addedhrs
+                createdSlot = addedhrs+':'+'00'
+                eveningslot.append(createdSlot)
+
+
+            else:
+                remaining_mins = abs(60 - (int(eveningfrommin)+avgtime))
+                addedhrs = (int(eveningfromhrs)+1)
+                addedhrs = str(addedhrs)
+                if len(addedhrs)==1:
+                    addedhrs = '0'+addedhrs
+                createdSlot = addedhrs+':'+ str(remaining_mins)
+                eveningslot.append(createdSlot)
+
+        print(eveningslot)
+
+        eveningSLOT = {}
+        slot_countList = []
+        start = 0
+        hour = (eveningslot[0][0:2])    
+        hour = int(hour)
+        total_hrs = 0
+        for j in range(len(eveningslot)):
+            if int(eveningslot[j][0:2]) == hour + 1:       
+                slotcount = abs(start - (j))
+                start= j
+                
+                if len(eveningslot[j][0:2]) == 1:
+                    time = ("0"+str(hour)+":00") +" -> "+ ("0"+str(hour+1)+":00")
+                    eveningSLOT[time]=slotcount
+
+                else:
+                    time = (str(hour)+":00") +" -> "+ (str(hour+1)+":00")
+                    eveningSLOT[time]=slotcount
+
+
+                hour = hour +1
+                total_hrs = total_hrs+1
+        
+        print(eveningSLOT)
+
+        slot_instance = slot_table(eveningslotDict=eveningSLOT,morningslotDict=SLOT, doc_username = request.user.username)
         slot_instance.save()
 
         # datewise_slot_instance = datewise_slot(doc_username= request.user.username ,slotDict=SLOT)
@@ -222,6 +300,10 @@ def doctordetailform(request):
         'specdegree': particular_doc.specdegree,
         'license': particular_doc.license,
         'desc': particular_doc.desc,
+        'morningfromtime' : particular_doc.fromtime,
+        'morningtotime' : particular_doc.totime,
+        'eveningfromtime' : particular_doc.eveningfromtime,
+        'eveningtotime' : particular_doc.eveningtotime,
         'avgtime': particular_doc.avgtime,
         'housenum': particular_doc.housenum,
         'hcity': particular_doc.hcity,

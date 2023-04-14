@@ -47,4 +47,5 @@ class booking(models.Model):
 class datewise_slot(models.Model):
     doc_username = models.CharField(max_length=50, null = True)
     date = models.DateField(null=True)
-    updatedSlotdict = models.JSONField(null=True)
+    morning_updatedSlotdict = models.JSONField(null=True,default=None)
+    evening_updatedSlotdict = models.JSONField(null=True, default = None)

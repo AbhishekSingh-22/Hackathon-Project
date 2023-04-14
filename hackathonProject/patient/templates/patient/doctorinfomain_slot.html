@@ -209,7 +209,7 @@
                 
                 
                 <div class="row pb-3 mx-4">
-                  {% for key, value in SLOT.items %}
+                  {% for key, value in morningSLOT.items %}
                   <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
                     
                     <form action="updatebookingslot" method="post" >
@@ -248,139 +248,32 @@
                   <strong>Evening</strong>
                 </div>
                 <div class="row pb-3 mx-4">
+                  {% for key, value in eveningSLOT.items %}
                   <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">05:00 pm -> 06:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
+                    
+                    <form action="updatebookingslot" method="post" >
+                      {% csrf_token %}
+                      <input type="hidden" value="{{key}}" name="slotTime">
+                      <input type="hidden" value="{{value}}" name="slotNum">
+                    
+                      {% if value == 0%}
+                    <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop" disabled>{{key}}</button>
+                    <p class="px-3 fw-light">({{value}} slots left)</p>
 
+                    {%else%}
+                    <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop">{{key}}</button>
+                    <p class="px-3 fw-light">({{value}} slots left)</p>
+                    {% endif %}
+                  </form>
                   </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">06:00 pm -> 07:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">07:00 pm -> 08:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
+                  {% endfor %}
+                
               </div>
-              <div class="carousel-item">
-                <div class="text-center">
-                  <strong class="">Tommorow</strong>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Morning</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">10:00 am -> 11:00 am</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">11:00 am -> 12:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">12:00 pm -> 1:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Evening</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">05:00 pm -> 06:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">06:00 pm -> 07:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-danger disabled" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">07:00 pm -> 08:00 pm</button>
-                    <p class="px-3 fw-light">(No slots left)</p>
-
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="text-center">
-                  <strong>12th April Wednesday</strong>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Morning</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">10:00 am -> 11:00 am</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">11:00 am -> 12:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">12:00 pm -> 1:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Evening</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">05:00 pm -> 06:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">06:00 pm -> 07:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">07:00 pm -> 08:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
+              
               </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
           </div>
         </div>
       </div>

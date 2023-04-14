@@ -141,10 +141,11 @@ def doctorinfo_slot(request):
 # d1 = today.strftime("%d/%m/%Y")
 # print("d1 =", d1)
 
-    print(datewise_slot_instance.updatedSlotdict)
+    print(datewise_slot_instance.morning_updatedSlotdict)
 
     params={
-        'SLOT' : datewise_slot_instance.updatedSlotdict,
+        'morningSLOT' : datewise_slot_instance.morning_updatedSlotdict,
+        'eveningSLOT' : datewise_slot_instance.evening_updatedSlotdict,
         'username': selected_doctor.dusername,
         'fname': selected_doctor.fname,
         'lname': selected_doctor.lname,
@@ -232,14 +233,25 @@ def form(request):
         datewise_slot_instance = datewise_slot.objects.filter(doc_username = particular_booking.doctor, date= particular_booking.date)[0]
 
         #takeing the slotDict from datewise_slot_instance
-        UpdatedSlotdict = datewise_slot_instance.updatedSlotdict
+        morning_UpdatedSlotdict = datewise_slot_instance.morning_updatedSlotdict
 
-        for i in datewise_slot_instance.updatedSlotdict:
+        for i in datewise_slot_instance.morning_updatedSlotdict:
             if i==particular_booking.slot:
-                UpdatedSlotdict[i] = UpdatedSlotdict[i]-1
+                morning_UpdatedSlotdict[i] = morning_UpdatedSlotdict[i]-1
 
-        print(UpdatedSlotdict)
-        datewise_slot_instance.updatedSlotdict = UpdatedSlotdict
+        print(morning_UpdatedSlotdict)
+
+        evening_UpdatedSlotdict = datewise_slot_instance.evening_updatedSlotdict
+
+        for i in datewise_slot_instance.evening_updatedSlotdict:
+            if i==particular_booking.slot:
+                evening_UpdatedSlotdict[i] = evening_UpdatedSlotdict[i]-1
+
+        print(evening_UpdatedSlotdict)
+
+
+        datewise_slot_instance.morning_updatedSlotdict = morning_UpdatedSlotdict
+        datewise_slot_instance.evening_updatedSlotdict = evening_UpdatedSlotdict
         datewise_slot_instance.save()
         
                 
@@ -413,9 +425,9 @@ def doctorinfo_date(request):
         particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
         slot_table_instance = slot_table.objects.filter(doc_username = particular_booking.doctor)[0]
-        print(slot_table_instance.slotDict)
+        # print(slot_table_instance.slotDict)
 
-        datewise_slot_instance = datewise_slot(date = selected_date, updatedSlotdict= slot_table_instance.slotDict, doc_username = particular_booking.doctor) 
+        datewise_slot_instance = datewise_slot(date = selected_date, morning_updatedSlotdict= slot_table_instance.morningslotDict, evening_updatedSlotdict= slot_table_instance.eveningslotDict, doc_username = particular_booking.doctor) 
         datewise_slot_instance.save()
 
 
