@@ -1,4 +1,5 @@
 from django.db import models
+from doctor.models import doctordetail
 
 # Create your models here.
 
@@ -30,3 +31,20 @@ class patientform(models.Model):
     
 
 # Model for handling appointment bookings
+class booking(models.Model):
+    auto_field = models.AutoField(primary_key=True)
+    bookingid = models.IntegerField(null=True)
+    patientdetail = models.ForeignKey(patientform, on_delete=models.CASCADE, null=True)
+    pusername = models.CharField(max_length=50, null = True)
+    pfname = models.CharField(max_length=50, null = True)
+    doctor = models.CharField(max_length=50, default="", null=True)
+    slot = models.CharField(max_length=20, default="", null=True)
+    slotNum = models.IntegerField(null =True)
+    date = models.DateField(null=True)
+    status = models.CharField(max_length=20, default="Unapproved", null=True)
+
+
+class datewise_slot(models.Model):
+    doc_username = models.CharField(max_length=50, null = True)
+    date = models.DateField(null=True)
+    updatedSlotdict = models.JSONField(null=True)

@@ -11,8 +11,10 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes,force_str
 from django.core.mail import EmailMessage,send_mail
-from doctor.models import doctordetail
-from patient.models import patientform
+from doctor.models import doctordetail, slot_table
+from patient.models import patientform, booking, datewise_slot
+from django.db.models import Q
+from datetime import date
 
 
 
@@ -32,9 +34,145 @@ def home(request):
     params={}
     params['doctorTable']=doctorTable
 
-
+    
+        
 
     return render(request, 'patient/home.html',params)
+
+
+
+    
+
+def doctorinfo_slot(request):
+    current_booking = booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    # Details of the doctor selected by patient
+    selected_doctor = doctordetail.objects.filter(dusername = current_booking.doctor)[0]
+
+    ####---------------------------------- Slot calculation----------------------------------#####
+    
+    # # Extracting time in string
+    # fromhrs, frommin = selected_doctor.fromtime.split(':')
+    # tohrs, tomin = selected_doctor.totime.split(':')
+
+    # # Converting time to int
+    # # fromhrs = int(fromhrs)
+    # # frommin = int(frommin)
+    # # tohrs = int(tohrs)
+    # # tomin = int(tomin)
+
+    # # Storing avg time in int format
+    # avgtime = int(selected_doctor.avgtime)
+    
+    # totalmins= (abs(int(fromhrs)- int(tohrs))*60 )+ abs(int(frommin)-int(tomin))
+    # Totalslots = totalmins//avgtime
+
+    # slot=[str(fromhrs)+':'+str(frommin)]
+
+    # for i in range(1,Totalslots+1):
+    #     fromhrs, frommin=slot[i-1].split(':')
+    #     if int(frommin)+avgtime < 60:
+
+    #         addedmins = int(frommin)+avgtime
+    #         createdSlot =(fromhrs +':'+str(addedmins))
+    #         slot.append(createdSlot)
+        
+    #     elif int(frommin)+avgtime ==  60:
+    #         addedhrs = (int(fromhrs)+1)
+    #         createdSlot = str(addedhrs)+':'+'00'
+    #         slot.append(createdSlot)
+
+
+    #     else:
+    #         remaining_mins = 60 - (int(frommin)+avgtime)
+    #         addedhrs = (int(fromhrs)+1)
+    #         createdSlot = str(addedhrs)+':'+ str(remaining_mins)
+    #         slot.append(createdSlot)
+
+    # print(slot)
+
+    # SLOT = {}
+    # slot_countList = []
+    # start = 0
+    # hour = (slot[0][0:2])    
+    # hour = int(hour)
+    # total_hrs = 0
+    # for j in range(len(slot)):
+    #     if int(slot[j][0:2]) == hour + 1:
+    #         slotcount = abs(start - (j))
+    #         start= j
+            
+    #         if len(slot[j][0:2]) == 1:
+    #             time = ("0"+str(hour)+":00") +" -> "+ ("0"+str(hour+1)+":00")
+    #             SLOT[time]=slotcount
+    #         else:
+    #             time = (str(hour)+":00") +" -> "+ (str(hour+1)+":00")
+    #             SLOT[time]=slotcount
+
+
+    #         hour = hour +1
+    #         total_hrs = total_hrs+1
+    
+    # print(SLOT)
+
+
+
+    #-----------------------------------------Slot calculation ends ------------------------------------------
+    
+    # selected_slot_instance = slot_table.objects.filter(doc_username = selected_doctor.dusername)[0]
+
+    datewise_slot_instance = datewise_slot.objects.filter(doc_username = selected_doctor.dusername, date = current_booking.date)[0]
+
+
+    # today = date.today()
+
+    # for i in selected_slot_instance:
+    #     if i.date == today.strftime("%d/%m/%Y"):
+    #         SLOT = i.slotDict
+
+        
+
+
+
+
+# # dd/mm/YY
+
+# today = date.today()
+# d1 = today.strftime("%d/%m/%Y")
+# print("d1 =", d1)
+
+    print(datewise_slot_instance.updatedSlotdict)
+
+    params={
+        'SLOT' : datewise_slot_instance.updatedSlotdict,
+        'username': selected_doctor.dusername,
+        'fname': selected_doctor.fname,
+        'lname': selected_doctor.lname,
+        'email': selected_doctor.email,
+        'contact': selected_doctor.contact,
+        'image': selected_doctor.image,
+        'specialization': selected_doctor.specialization,
+        'specdegree': selected_doctor.specdegree,
+        'license': selected_doctor.license,
+        'desc': selected_doctor.desc,
+        'avgtime': selected_doctor.avgtime,
+        'housenum': selected_doctor.housenum,
+        'hcity': selected_doctor.hcity,
+        'hlandmark': selected_doctor.hlandmark,
+        'hzip': selected_doctor.hzip,
+        'hstate': selected_doctor.hstate,
+        'clocation': selected_doctor.clocation,
+        'ccity': selected_doctor.ccity,
+        # 'clandmark': particular_doc.clandmark,
+        'czip': selected_doctor.czip,
+        'cstate': selected_doctor.cstate,
+        }
+
+    print(params["image"])
+
+    return render(request, "patient/doctorinfomain_slot.html", params)
+
+
 
 def form(request):
 
@@ -84,6 +222,28 @@ def form(request):
 
         particular_patient.save()
 
+        # Handling Booking table for patientDetails
+
+        particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+        particular_booking.patientdetail= particular_patient
+
+        particular_booking.save()
+
+        datewise_slot_instance = datewise_slot.objects.filter(doc_username = particular_booking.doctor, date= particular_booking.date)[0]
+
+        #takeing the slotDict from datewise_slot_instance
+        UpdatedSlotdict = datewise_slot_instance.updatedSlotdict
+
+        for i in datewise_slot_instance.updatedSlotdict:
+            if i==particular_booking.slot:
+                UpdatedSlotdict[i] = UpdatedSlotdict[i]-1
+
+        print(UpdatedSlotdict)
+        datewise_slot_instance.updatedSlotdict = UpdatedSlotdict
+        datewise_slot_instance.save()
+        
+                
+
         return redirect("home")
     
 
@@ -114,3 +274,158 @@ def form(request):
     }
 
     return render(request, 'patient/form.html', params)
+
+
+# --------------------------------------- Updation of booking table ---------------------------------
+
+
+
+def updatebooking_after_docselection(request):          #Updation of booking table after choosing a doctor in home page
+
+    if request.method == "POST":
+        dusername = request.POST.get("doctorusername")
+
+        bookingobject = booking()
+        bookingobject.doctor= dusername
+        bookingobject.bookingid= request.user.id
+        bookingobject.pusername= request.user.username
+        bookingobject.pfname= request.user.first_name
+
+        bookingobject.save()
+
+        # datewise_slot_instance = datewise_slot(doc_username =dusername)
+        # datewise_slot_instance.save()
+
+
+        return redirect("doctorinfo_date")
+    
+
+
+def updatebooking_after_goingbackdate(request):                 # updation after clicking back button in doctors info page
+
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    particular_booking.delete()
+
+    return redirect("home") 
+
+
+def updatebooking_after_goingbackslot(request):
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    particular_booking.date = None
+    particular_booking.save()
+
+    return redirect("doctorinfo_date")
+
+
+
+
+
+def updatebooking_after_logout(request):                 # updation after clicking back button in doctors info page
+
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    # if datewise_slot.objects.filter(doc_username = particular_booking.doctor, date=particular_booking.date)[0]:
+    #     datewise_slot_instance = datewise_slot.objects.filter(doc_username = particular_booking.doctor, date=particular_booking.date)[0]
+    #     datewise_slot_instance.delete():
+
+
+    particular_booking.delete()
+
+
+    return redirect("signout")
+
+def updatebooking_after_slotselection(request):
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    if request.method == "POST":
+        # selected_date = request.POST.get("date")
+        slotTime = request.POST.get("slotTime")
+        slotNum = request.POST.get("slotNum")
+
+        particular_booking.slot= slotTime
+        
+        particular_booking.slotNum= slotNum
+
+        # particular_booking.= request.user.id
+
+        particular_booking.save()
+
+
+        return redirect("form")
+
+
+def updatebooking_after_goingbackform(request):
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    particular_booking.slot= None
+    particular_booking.slotNum= None
+
+    return redirect("doctorinfo_slot")
+
+def doctorinfo_date(request):
+
+
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+    
+    current_booking = booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    selected_doctor = doctordetail.objects.filter(dusername = current_booking.doctor)[0]
+
+    params={
+        # 'SLOT' : datewise_slot_instance.updatedSlotdict,
+        'username': selected_doctor.dusername,
+        'fname': selected_doctor.fname,
+        'lname': selected_doctor.lname,
+        'email': selected_doctor.email,
+        'contact': selected_doctor.contact,
+        'image': selected_doctor.image,
+        'specialization': selected_doctor.specialization,
+        'specdegree': selected_doctor.specdegree,
+        'license': selected_doctor.license,
+        'desc': selected_doctor.desc,
+        'avgtime': selected_doctor.avgtime,
+        'housenum': selected_doctor.housenum,
+        'hcity': selected_doctor.hcity,
+        'hlandmark': selected_doctor.hlandmark,
+        'hzip': selected_doctor.hzip,
+        'hstate': selected_doctor.hstate,
+        'clocation': selected_doctor.clocation,
+        'ccity': selected_doctor.ccity,
+        # 'clandmark': particular_doc.clandmark,
+        'czip': selected_doctor.czip,
+        'cstate': selected_doctor.cstate,
+        }
+
+    # Details of the doctor selected by patient
+    
+
+    if request.method == "POST":
+        selected_date = request.POST.get("date")
+
+        particular_booking.date= selected_date
+        particular_booking.save()
+        
+        if (datewise_slot.objects.filter(date = selected_date)): 
+           return redirect("doctorinfo_slot")
+
+        particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+        slot_table_instance = slot_table.objects.filter(doc_username = particular_booking.doctor)[0]
+        print(slot_table_instance.slotDict)
+
+        datewise_slot_instance = datewise_slot(date = selected_date, updatedSlotdict= slot_table_instance.slotDict, doc_username = particular_booking.doctor) 
+        datewise_slot_instance.save()
+
+
+        
+
+        return redirect("doctorinfo_slot")
+    
+    return render(request, "patient/doctorinfomain_date.html", params)
+                
+
+
+
+

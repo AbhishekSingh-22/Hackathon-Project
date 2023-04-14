@@ -46,3 +46,11 @@ class doctordetail(models.Model):
     def __str__(self):
         
         return self.fname
+    
+
+
+# Model for handling slot data of each doctor    
+class slot_table(models.Model):
+    doc_username = models.CharField(max_length=50, null = True)
+    slotDict = models.JSONField()
+    date = models.DateField(null=True)

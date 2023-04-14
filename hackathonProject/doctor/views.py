@@ -15,8 +15,8 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 
-from .models import doctordetail                    # Importing doctordetail table/model
-
+from .models import doctordetail, slot_table                   # Importing doctordetail table/model
+from patient.models import datewise_slot
 
 
 # Create your views here.
@@ -120,7 +120,91 @@ def doctordetailform(request):
 
         
         particular_doc.save()
- 
+
+
+            ####---------------------------------- Slot calculation----------------------------------#####
+    
+        # Extracting time in string
+        fromhrs, frommin = fromtime.split(':')
+        tohrs, tomin = totime.split(':')
+
+        # Converting time to int
+        # fromhrs = int(fromhrs)
+        # frommin = int(frommin)
+        # tohrs = int(tohrs)
+        # tomin = int(tomin)
+
+        # Storing avg time in int format
+        avgtime = int(avgtime)
+        
+        totalmins= (abs(int(fromhrs)- int(tohrs))*60 )+ abs(int(frommin)-int(tomin))
+        Totalslots = totalmins//avgtime
+
+        slot=[str(fromhrs)+':'+str(frommin)]
+
+        for i in range(1,Totalslots+1):
+            fromhrs, frommin=slot[i-1].split(':')
+            if int(frommin)+avgtime < 60:
+
+                addedmins = int(frommin)+avgtime
+                createdSlot =(fromhrs +':'+str(addedmins))
+                slot.append(createdSlot)
+            
+            elif int(frommin)+avgtime ==  60:
+                addedhrs = (int(fromhrs)+1)
+                addedhrs = str(addedhrs)
+                if len(addedhrs)==1:
+                    addedhrs = '0'+addedhrs
+                createdSlot = addedhrs+':'+'00'
+                slot.append(createdSlot)
+
+
+            else:
+                remaining_mins = abs(60 - (int(frommin)+avgtime))
+                addedhrs = (int(fromhrs)+1)
+                addedhrs = str(addedhrs)
+                if len(addedhrs)==1:
+                    addedhrs = '0'+addedhrs
+                createdSlot = addedhrs+':'+ str(remaining_mins)
+                slot.append(createdSlot)
+
+        print(slot)
+
+        SLOT = {}
+        slot_countList = []
+        start = 0
+        hour = (slot[0][0:2])    
+        hour = int(hour)
+        total_hrs = 0
+        for j in range(len(slot)):
+            if int(slot[j][0:2]) == hour + 1:       
+                slotcount = abs(start - (j))
+                start= j
+                
+                if len(slot[j][0:2]) == 1:
+                    time = ("0"+str(hour)+":00") +" -> "+ ("0"+str(hour+1)+":00")
+                    SLOT[time]=slotcount
+
+                else:
+                    time = (str(hour)+":00") +" -> "+ (str(hour+1)+":00")
+                    SLOT[time]=slotcount
+
+
+                hour = hour +1
+                total_hrs = total_hrs+1
+        
+        print(SLOT)
+
+        slot_instance = slot_table(slotDict=SLOT, doc_username = request.user.username)
+        slot_instance.save()
+
+        # datewise_slot_instance = datewise_slot(doc_username= request.user.username ,slotDict=SLOT)
+        # datewise_slot_instance.save()
+
+
+
+        #-----------------------------------------Slot calculation ends ------------------------------------------
+    
 
         return redirect("doctorhome")
 
