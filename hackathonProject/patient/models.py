@@ -37,6 +37,7 @@ class booking(models.Model):
     patientdetail = models.ForeignKey(patientform, on_delete=models.CASCADE, null=True)
     pusername = models.CharField(max_length=50, null = True)
     pfname = models.CharField(max_length=50, null = True)
+    plname = models.CharField(max_length=50, null = True)
     doctor = models.CharField(max_length=50, default="", null=True)
     slot = models.CharField(max_length=20, default="", null=True)
     slotNum = models.IntegerField(null =True)
@@ -49,3 +50,4 @@ class datewise_slot(models.Model):
     date = models.DateField(null=True)
     morning_updatedSlotdict = models.JSONField(null=True,default=None)
     evening_updatedSlotdict = models.JSONField(null=True, default = None)
+

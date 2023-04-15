@@ -13,6 +13,5 @@ urlpatterns = [
     path('updatebookinglogout', views.updatebooking_after_logout, name="updatebooking_after_logout"),   
     path('updatebookingslot', views.updatebooking_after_slotselection, name="updatebooking_after_slotselection"),   
     path('updatebookingformback', views.updatebooking_after_goingbackform, name="updatebooking_after_goingbackform"),   
-   
 
 ]     

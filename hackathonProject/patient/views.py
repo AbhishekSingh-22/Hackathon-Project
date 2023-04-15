@@ -302,6 +302,7 @@ def updatebooking_after_docselection(request):          #Updation of booking tab
         bookingobject.bookingid= request.user.id
         bookingobject.pusername= request.user.username
         bookingobject.pfname= request.user.first_name
+        bookingobject.plname= request.user.last_name
 
         bookingobject.save()
 
@@ -419,11 +420,12 @@ def doctorinfo_date(request):
         particular_booking.date= selected_date
         particular_booking.save()
         
-        if (datewise_slot.objects.filter(date = selected_date)): 
-           return redirect("doctorinfo_slot")
 
         particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
+        if (datewise_slot.objects.filter(date = selected_date, doc_username = particular_booking.doctor)): 
+           return redirect("doctorinfo_slot")
+        
         slot_table_instance = slot_table.objects.filter(doc_username = particular_booking.doctor)[0]
         # print(slot_table_instance.slotDict)
 

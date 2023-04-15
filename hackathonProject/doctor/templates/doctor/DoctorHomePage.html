@@ -102,24 +102,40 @@
                 <Strong class="text-success fs-3 ">Appointments</Strong>
             </div>
             <div class="row mb-4">
+                {% for booking in doc_bookings %}
                 <div class="col-sm-4 mb-3 mb-sm-0">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Mr Rahul Dubey</h5>
-                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <button class="btn btn-outline-success approvebtn" id="apr1">Approve</button>
+                            <h5 class="card-title">{{booking.pfname}} {{booking.plname}}</h5>
+                            <span class="text-success fw-lighter">({{booking.slot}}) ({{booking.date}})</span>
+                            <p class="card-text">{{booking.patientdetail.symptoms}}</p>
+                            <form action="updateapprove" method="post" style="display : inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="bookingid" value="{{booking.bookingid}}">
+                                <input type="hidden" name="patientusername" value="{{booking.pusername}}">
+                                <input type="hidden" name="pfname" value="{{booking.pfname}}">
+                                <input type="hidden" name="slot" value="{{booking.slot}}">
+                                <input type="hidden" name="dusername" value="{{booking.doctor}}">
+                                <input type="hidden" name="slotNum" value="{{booking.slotNum}}">
+                            <button type="submit" class="btn btn-outline-success approvebtn" id="apr1">Approve</button>
+                            </form>
+
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 Cancel
                             </button>
-                            <button href="#" class="btn btn-outline-success float-end">View More</button>
+                            <form action="viewmore" method="post" style="display : inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="patientusername" value="{{booking.pusername}}">
+                                <input type="hidden" name="fname" value="{{booking.pfname}}">
+                                <input type="hidden" name="lname" value="{{booking.plname}}">
+                            <button type="submit" class="btn btn-outline-success float-end">View More</button>
+                        </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                {% endfor %}
+                <!-- <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr Arun Kowachi</h5>
@@ -266,7 +282,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

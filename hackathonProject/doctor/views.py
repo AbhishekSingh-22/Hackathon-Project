@@ -16,7 +16,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 
 from .models import doctordetail, slot_table                   # Importing doctordetail table/model
-from patient.models import datewise_slot
+from patient.models import datewise_slot, booking, patientform
 
 
 # Create your views here.
@@ -24,7 +24,16 @@ def doctorhome(request):
     doctor_detail=doctordetail()
 
     if doctordetail.objects.filter(dusername=request.user.username):
-        return render(request, 'doctor/DoctorHomePage.html')
+
+        doc_bookings = booking.objects.filter(doctor = request.user.username, status = "Unapproved")
+
+        params={
+            "doc_bookings" : doc_bookings
+        }
+
+        
+
+        return render(request, 'doctor/DoctorHomePage.html',params)
     
     else:
        
@@ -39,6 +48,62 @@ def doctorhome(request):
 
 
         return redirect("doctordetailform")
+
+# def update_viemoreTable(request):
+
+
+def viewmore(request):
+    if request.method == "POST":
+        patientusername = request.POST.get("patientusername")
+        pfname = request.POST.get("fname")
+        plname = request.POST.get("lname")
+       
+        patientdetail = patientform.objects.filter(pusername = patientusername, fname = pfname, lname = plname)[0]
+        params={
+        "fname": patientdetail.fname,
+        "lname": patientdetail.lname,
+        "age": patientdetail.age,
+        "height": patientdetail.height,
+        "weight": patientdetail.weight,
+        "bloodgrp": patientdetail.bloodgrp,
+        "gender": patientdetail.gender,
+        "email": patientdetail.pemail,
+
+        "contact": patientdetail.contact,
+        
+        "state": patientdetail.state,
+        
+        "allergy": patientdetail.allergy,
+        
+        "medications": patientdetail.goingonMedications,
+        
+        "insurance": patientdetail.insurance,
+        
+        "drughistory": patientdetail.drughistory,
+        "symptoms": patientdetail.symptoms,
+        "medicalhistory": patientdetail.medicalhistory
+        
+        }
+
+        return render(request, "doctor/PatientDetail.html", params)
+        
+def updateapprove(request):
+    if request.method == "POST":
+        bid = request.POST.get("bookingid")
+        pusername = request.POST.get("patientusername")
+        pfname = request.POST.get("pfname")
+        slot = request.POST.get("slot")
+        dusername = request.POST.get("dusername")
+        slotNum = request.POST.get("slotNum")
+
+        booking_instance = booking.objects.filter( bookingid = bid, pusername = pusername, pfname= pfname, slot = slot, doctor = dusername, slotNum = slotNum)[0]
+
+        booking_instance.status = "Approved"
+
+        booking_instance.save()
+
+        return redirect("doctorhome")
+
 
 
 
@@ -326,4 +391,10 @@ def doctordetailform(request):
 
 
 def doctorapproved(request):
-    return render(request, "doctor/Approved.html")
+    doc_bookings = booking.objects.filter(doctor = request.user.username, status = "Approved")
+
+    params={
+        "doc_bookings" : doc_bookings
+    }
+
+    return render(request, "doctor/Approved.html",params)

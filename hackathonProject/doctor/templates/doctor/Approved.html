@@ -85,196 +85,30 @@
             <div class="text-center p-3 ">
                 <Strong class="text-success fs-3 ">Approved appointments</Strong>
             </div>
-            <div class="mb-2">
-                <strong class="text-success ">Tommorow</strong>
-            </div>
             <div class="row mb-4">
+                {% for approvedbooking in doc_bookings %}
                 <div class="col-sm-4 mb-3 mb-sm-0">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Mr Rahul Dubey</h5>
-                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
+                            <h5 class="card-title">{{approvedbooking.pfname}} {{approvedbooking.plname}}</h5>
+                            <span class="text-success fw-lighter">({{approvedbooking.slot}}) ({{approvedbooking.date}})</span>
+                            <p class="card-text">{{approvedbooking.patientdetail.symptoms}}</p>
                             <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 Cancel
                             </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
+                            <form action="viewmore" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="patientusername" value="{{approvedbooking.pusername}}">
+                                <input type="hidden" name="fname" value="{{approvedbooking.pfname}}">
+                                <input type="hidden" name="lname" value="{{approvedbooking.plname}}">
+                            <button type="submit" class="btn btn-outline-success float-end">View More</button>
+                        </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mr Arun Kowachi</h5>
-                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mrs Swati Singh</h5>
-                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-4">
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mrs Ritu Verma</h5>
-                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <strong class="text-success ">11th April Monday</strong>
-            </div>
-            <div class="row mb-4">
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mr Nikhil Bharadwaj</h5>
-                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mr priyanshu Prajapati</h5>
-                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="row"> -->
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mrs Anjali</h5>
-                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-4">
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mr Jethalal Gada</h5>
-                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mrs Babita</h5>
-                            <span class="text-success fw-lighter">(10:00 am to 11:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Cancel
-                            </button>
-                            <a href="#" class="btn btn-outline-success float-end">View More</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <strong class="text-success ">12th April tuesday</strong>
-            </div>
-            <div class="row mb-4">
-
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <!-- <img src="/images/sorry.gif" alt="sorry" class="img-fluid "> -->
-                    <!-- <img src="/images/empty.gif" alt="sorry" class="img-fluid "> -->
-                </div>
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <!-- <span class="typewriter">No Appointments</span> -->
-                </div>
-               
-            </div>
+                {% endfor %}
         </div>
 
     </div>
