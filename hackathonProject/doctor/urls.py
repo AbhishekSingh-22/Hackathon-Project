@@ -10,6 +10,7 @@ urlpatterns = [
     path('doctorapproved', views.doctorapproved, name="doctorapproved"),  
     path('viewmore', views.viewmore, name="viewmore"), 
     path('updateapprove', views.updateapprove, name="updateapprove"), 
+    path('cancel', views.cancel, name="cancel"), 
 
 
 ]       

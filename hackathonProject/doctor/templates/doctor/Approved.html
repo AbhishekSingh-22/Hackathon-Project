@@ -95,7 +95,7 @@
                             <p class="card-text">{{approvedbooking.patientdetail.symptoms}}</p>
                             <!-- <a href="#" class="btn btn-outline-success">Approve</a> -->
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                                data-bs-target="#{{approvedbooking.pk}}">
                                 Cancel
                             </button>
                             <form action="viewmore" method="post" style="display: inline;">
@@ -105,6 +105,106 @@
                                 <input type="hidden" name="lname" value="{{approvedbooking.plname}}">
                             <button type="submit" class="btn btn-outline-success float-end">View More</button>
                         </form>
+                        <!-- __________________________________________________________________for contents inside Modal start_____________________________________ -->
+    <div class="modal fade" id="{{approvedbooking.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="cancel" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="pusername" value="{{approvedbooking.pusername}}">
+            <input type="hidden" name="pk" value="{{approvedbooking.auto_field}}">
+            <input type="hidden" name="date" value="{{approvedbooking.date}}">
+            <input type="hidden" name="slot" value="{{approvedbooking.slot}}">
+            <!-- <input type="hidden" name="">
+            <input type="hidden" name=""> -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tell us the reason.</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios1"
+                            value="doctor's Proffesional Burnout" required>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Proffesional Burnout
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="doctor's Personal Emergency" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Personal Emergency
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="doctor's Proffesional obligation" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Proffesional obligation
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="Health Issues of doctor" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Health Issues
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="Overbooking and scheduling conflicts" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Overbooking and scheduling conflicts
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="Administrative issues of the doctor's clinic" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Administrative issues
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="Technical Difficulties faced by the doctor" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Technical Difficulties
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="Staffing Shortage faced by the doctor" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            Staffing Shortage
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                            value="Some emergency at the doctor's end" required>
+                        <label class="form-check-label" for="exampleRadios2">
+                            others
+                        </label>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Please explain the reason
+                            elaboratly. <span class="fw-light">(will not be shared by user)</span></label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="DetailReason" required></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+            
+            </div>
+        </div>
+    </form>
+    </div>
+    <!-- __________________________________________________________________for contents inside Modal end_____________________________________ -->
                         </div>
                     </div>
                 </div>
@@ -114,7 +214,7 @@
     </div>
 
     <!-- __________________________________________________________________for contents inside Modal start_____________________________________ -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,7 +301,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- __________________________________________________________________for contents inside Modal end_____________________________________ -->
 
     <!-- __________________________________________________________________Approved section ends__________________________________________ -->

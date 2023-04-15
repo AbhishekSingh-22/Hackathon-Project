@@ -214,6 +214,7 @@
                     
                     <form action="updatebookingslot" method="post" >
                       {% csrf_token %}
+                      <input type="hidden" value="dusername" name="dusername">
                       <input type="hidden" value="{{key}}" name="slotTime">
                       <input type="hidden" value="{{value}}" name="slotNum">
                     
