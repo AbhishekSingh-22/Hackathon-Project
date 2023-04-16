@@ -16,7 +16,9 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 
 from .models import doctordetail, slot_table                   # Importing doctordetail table/model
-from patient.models import datewise_slot
+from patient.models import datewise_slot, booking, patientform
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -24,7 +26,19 @@ def doctorhome(request):
     doctor_detail=doctordetail()
 
     if doctordetail.objects.filter(dusername=request.user.username):
-        return render(request, 'doctor/DoctorHomePage.html')
+
+        doc_bookings = booking.objects.filter(doctor = request.user.username, status = "Unapproved")
+
+        # patient_detail = patientform.objects.filter(dusername = request.user.username)
+        # print( doc_bookings, patient_detail)
+
+        # infoList = [doc_bookings, patient_detail]
+        params={
+            "doc_bookings" : doc_bookings,
+        }
+        
+
+        return render(request, 'doctor/DoctorHomePage.html',params)
     
     else:
        
@@ -39,6 +53,84 @@ def doctorhome(request):
 
 
         return redirect("doctordetailform")
+
+# def update_viemoreTable(request):
+
+
+def viewmore(request):
+    if request.method == "POST":
+        patientusername = request.POST.get("patientusername")
+        pfname = request.POST.get("fname")
+        plname = request.POST.get("lname")
+        slot = request.POST.get("slot")
+        slotNum = request.POST.get("slotNum")
+       
+        patientdetail = patientform.objects.filter(pusername = patientusername,dusername = request.user.username, slot = slot, slotNum = slotNum)[0]
+        params={
+        "fname": patientdetail.fname,
+        "lname": patientdetail.lname,
+        "age": patientdetail.age,
+        "height": patientdetail.height,
+        "weight": patientdetail.weight,
+        "bloodgrp": patientdetail.bloodgrp,
+        "gender": patientdetail.gender,
+        "email": patientdetail.pemail,
+
+        "contact": patientdetail.contact,
+        
+        "state": patientdetail.state,
+        
+        "allergy": patientdetail.allergy,
+        
+        "medications": patientdetail.goingonMedications,
+        
+        "insurance": patientdetail.insurance,
+        
+        "drughistory": patientdetail.drughistory,
+        "symptoms": patientdetail.symptoms,
+        "medicalhistory": patientdetail.medicalhistory
+        
+        }
+
+        return render(request, "doctor/PatientDetail.html", params)
+        
+def updateapprove(request):
+    if request.method == "POST":
+        auto_field = request.POST.get("auto_field")
+        pusername = request.POST.get("patientusername")
+        pfname = request.POST.get("pfname")
+        slot = request.POST.get("slot")
+        dusername = request.POST.get("dusername")
+        slotNum = request.POST.get("slotNum")
+
+        booking_instance = booking.objects.filter( auto_field = auto_field, pusername = pusername, pfname= pfname, slot = slot, doctor = dusername, slotNum = slotNum)[0]
+
+        booking_instance.status = "Approved"
+
+        booking_instance.save()
+
+        # getting patients email
+        user_instance = User.objects.filter(username = pusername)[0]
+        pemail = user_instance.email
+
+        # Getting doctor details
+        doctordetail_instance = doctordetail.objects.filter(dusername = dusername)[0]
+
+
+        # -------------- Appointment Approval mail starts ----------------------------------
+        subject = "Approval of Appointment Booking"
+        message = "Dear" + user_instance.first_name +''+ user_instance.last_name+ "\n" + "We are pleased to inform you that your appointment with"+ doctordetail_instance.fname +' '+ doctordetail_instance.lname + "has been approved. Your appointment is scheduled for "+ str(booking_instance.date) + ", " + booking_instance.slot +"at "+ doctordetail_instance.clocation+ "\n\n" +"Our team is prepared to provide you with excellent service, and we are confident that this meeting will be productive and helpful for you. Please carry all the neccessary documents/medical reports with you in order to have a Seamless medical appointment"+ "\n\n" + "Please let us know if you have any questions or concerns about the appointment."+"\n\n"+"Thank you for choosing our BookMyDoc. for your appointment, and we look forward to a healthy appointment with you."+"\n\n"+"Sincerely,"+"\n\n"+ "BookMyDoc. Team"
+        from_email= settings.EMAIL_HOST_USER
+        to_list= [pemail]
+
+        send_mail(subject, message, from_email, to_list, fail_silently= True)          # mail sent
+
+        #--------------Appointment Approval mail ends ------------------------------
+
+
+
+        return redirect("doctorhome")
+
 
 
 
@@ -326,4 +418,42 @@ def doctordetailform(request):
 
 
 def doctorapproved(request):
-    return render(request, "doctor/Approved.html")
+    doc_bookings = booking.objects.filter(doctor = request.user.username, status = "Approved")
+
+    params={
+        "doc_bookings" : doc_bookings
+    }
+
+    return render(request, "doctor/Approved.html",params)
+
+def cancel(request):
+    if request.method == "POST":
+        pusername = request.POST.get("pusername")
+        ReasonChoice = request.POST.get("ReasonChoice")
+        auto_field = request.POST.get("pk")
+        date = request.POST.get("date")
+        slot = request.POST.get("slot")
+        DetailReason = request.POST.get("DetailReason")
+
+        print(pusername, ReasonChoice, auto_field)
+
+        booking_instance = booking.objects.filter(pusername = pusername, auto_field=auto_field)[0]
+        booking_instance.delete()
+
+        # getting patients email
+        user_instance = User.objects.filter(username = pusername)[0]
+        pemail = user_instance.email
+
+        # -------------- Cancellation mail starts ----------------------------------
+        subject = "Cancellation of Appointment Booking"
+        message = "Dear" + user_instance.first_name +''+ user_instance.last_name+ "\n" + "We regret to inform you that your appointment booking scheduled for" + str(date) + " " + slot + "with\nour organization has been cancelled due to unforeseen circumstances.\n\n" + "We apologize for any inconvenience this may cause and understand the inconvenience it\nmay cause you. In the meanwhile you can book an another appointment for other slots"+ "\n\n" + "If you have any questions or concerns about the cancellation, please do not hesitate to \ncontact us. We will be more than happy to assist you."+"\n\n"+"Thank you for your understanding and we look forward to serving you in the future."+"\n\n"+"Sincerely,"+"\n\n"+ "BookMyDoc. Team"
+        from_email= settings.EMAIL_HOST_USER
+        to_list= [pemail]
+
+        send_mail(subject, message, from_email, to_list, fail_silently= True)          # mail sent
+
+        #--------------Cancellation mail ends ------------------------------
+        prev_page = request.META.get('HTTP_REFERER')
+        
+        return HttpResponseRedirect(prev_page)
+        # return redirect("doctorapproved")

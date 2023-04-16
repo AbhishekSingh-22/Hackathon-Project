@@ -11,5 +11,6 @@ urlpatterns = [
     path('signout', views.signout, name="signout")  ,           
     path('docsignup', views.docsignup, name="docsignup")  ,           
     path('docsignin', views.docsignin, name="docsignin")  ,           
+               
 ]
 

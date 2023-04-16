@@ -7,7 +7,10 @@ from . import views                                            # Importing views
 urlpatterns = [
     path('', views.doctorhome, name="doctorhome"), 
     path('doctordetailform', views.doctordetailform, name="doctordetailform"), 
-    path('doctorapproved', views.doctorapproved, name="doctorapproved"), 
+    path('doctorapproved', views.doctorapproved, name="doctorapproved"),  
+    path('viewmore', views.viewmore, name="viewmore"), 
+    path('updateapprove', views.updateapprove, name="updateapprove"), 
+    path('cancel', views.cancel, name="cancel"), 
 
 
 ]       

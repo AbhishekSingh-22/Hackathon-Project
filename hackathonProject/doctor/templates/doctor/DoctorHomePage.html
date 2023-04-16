@@ -102,24 +102,156 @@
                 <Strong class="text-success fs-3 ">Appointments</Strong>
             </div>
             <div class="row mb-4">
+                {% if doc_bookings%}
+                {% for booking in doc_bookings %}
                 <div class="col-sm-4 mb-3 mb-sm-0">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Mr Rahul Dubey</h5>
-                            <span class="text-success fw-lighter">(9:00 am to 10:00 am)</span>
-                            <p class="card-text">Here we will write a brief detail of the problems given by the patient
-                                in
-                                the form.</p>
-                            <button class="btn btn-outline-success approvebtn" id="apr1">Approve</button>
+                            <h5 class="card-title">{{booking.patientdetail.fname}} {{booking.patientdetail.lname}}</h5>
+                            <span class="text-success fw-lighter">({{booking.slot}}) ({{booking.date}})</span>
+                            <p class="card-text">{{booking.patientdetail.symptoms}}</p>
+                            <form action="updateapprove" method="post" style="display : inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="auto_field" value="{{booking.auto_field}}">
+                                <input type="hidden" name="patientusername" value="{{booking.pusername}}">
+                                <input type="hidden" name="pfname" value="{{booking.pfname}}">
+                                <input type="hidden" name="slot" value="{{booking.slot}}">
+                                <input type="hidden" name="dusername" value="{{booking.doctor}}">
+                                <input type="hidden" name="slotNum" value="{{booking.slotNum}}">
+                            <button type="submit" class="btn btn-outline-success approvebtn" id="apr1">Approve</button>
+                            </form>
+
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                                data-bs-target="#{{booking.pk}}">
                                 Cancel
                             </button>
-                            <button href="#" class="btn btn-outline-success float-end">View More</button>
+                            <form action="viewmore" method="post" style="display : inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="patientusername" value="{{booking.pusername}}">
+                                <input type="hidden" name="fname" value="{{patientdetail.fname}}">
+                                <input type="hidden" name="lname" value="{{patientdetail.lname}}">
+                                <input type="hidden" name="slot" value="{{booking.slot}}">
+                                <input type="hidden" name="slotNum" value="{{booking.slotNum}}">
+                            <button type="submit" class="btn btn-outline-success float-end">View More</button>
+                        </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="modal fade" id="{{booking.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="cancel" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="pusername" value="{{booking.pusername}}">
+                        <input type="hidden" name="pk" value="{{booking.auto_field}}">
+                        <input type="hidden" name="date" value="{{booking.date}}">
+                        <input type="hidden" name="slot" value="{{booking.slot}}">
+                        <!-- <input type="hidden" name="">
+                        <input type="hidden" name=""> -->
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Tell us the reason.</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+            
+                            <div class="modal-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios1"
+                                        value="doctor's Proffesional Burnout" required>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Proffesional Burnout
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="doctor's Personal Emergency" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Personal Emergency
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="doctor's Proffesional obligation" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Proffesional obligation
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="Health Issues of doctor" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Health Issues
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="Overbooking and scheduling conflicts" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Overbooking and scheduling conflicts
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="Administrative issues of the doctor's clinic" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Administrative issues
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="Technical Difficulties faced by the doctor" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Technical Difficulties
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="Staffing Shortage faced by the doctor" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Staffing Shortage
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ReasonChoice" id="exampleRadios2"
+                                        value="Some emergency at the doctor's end" required>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        others
+                                    </label>
+                                </div>
+            
+            
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Please explain the reason
+                                        elaboratly. <span class="fw-light">(will not be shared by user)</span></label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="DetailReason" required></textarea>
+                                </div>
+            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                            </div>
+                        
+                        </div>
+                    </div>
+                
+                </div>
+            </form>
+            {% endfor %}
+            {% else %}
+            <div class="text-center p-3 ">
+                <Strong class="text-success fs-3 ">No Upcoming Appointments</Strong>
+            </div>
+            {% endif %}
+                <!-- __________________________________________________________________for contents inside Modal end_____________________________________ -->
+                                    <!-- </div>
+                                </div>
+                            </div>
+                           
+                    </div>
+            
+                </div> -->
+                
+                <!-- <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mr Arun Kowachi</h5>
@@ -266,7 +398,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

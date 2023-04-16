@@ -87,9 +87,9 @@
             </div>
             <div class="col-sm-4 mb-3 mb-sm-0">
               <!-- <strong>Mon-Sat</strong> <br> -->
-              <span>Morining (10am to 1pm)</span> <br>
-              <span>Evening(5pm to 8pm)</span> <br>
-              <Span>Sun closed</Span>
+              <span>Morning ({{fromtime}} to {{totime}})</span> <br>
+              <span>Evening ({{eveningfromtime}} to {{eveningtotime}})</span> <br>
+              <!-- <Span>Sun closed</Span> -->
             </div>
             <div class="col-sm-4 mb-3">
               <Span> ₹1000</Span><br>
@@ -136,7 +136,7 @@
           <div class="row mx-1 mb-3 ">
             <div class="col-sm-4 mb-3">
               <strong>Address</strong> <br>
-              <span> Number 153,1st Cross Landmark: Near Jakkasandra Bus Stop and Beside Bandhan Bank, Bangalore</span>
+              <span> {{clocation}}, {{ccity}}, {{cstate}}, {{czip}}</span>
               <br>
               <a href="https://www.google.com/maps/place/12.92547,77.63599" target="_blank" rel="noopener noreferrer"
                 style="text-decoration: none;">Get Direction</a>
@@ -201,7 +201,7 @@
             <div class="carousel-inner">
               <div class="carousel-item active ">
                 <div class="text-center">
-                  <form method="post">
+                  <form class="m-5" method="post">
                     {% csrf_token %}
                   <strong>Select Date:</strong>
                   <input type="date" name="date" id="">
@@ -237,134 +237,6 @@
                     <p class="px-3 fw-light">(4 slots left)</p>
 
                   </div> -->
-                </div>
-                
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3 ">
-                  <strong>Evening</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">05:00 pm -> 06:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">06:00 pm -> 07:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">07:00 pm -> 08:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="text-center">
-                  <strong class="">Tommorow</strong>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Morning</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">10:00 am -> 11:00 am</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">11:00 am -> 12:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">12:00 pm -> 1:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Evening</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">05:00 pm -> 06:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">06:00 pm -> 07:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-danger disabled" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">07:00 pm -> 08:00 pm</button>
-                    <p class="px-3 fw-light">(No slots left)</p>
-
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="text-center">
-                  <strong>12th April Wednesday</strong>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Morning</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">10:00 am -> 11:00 am</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">11:00 am -> 12:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">12:00 pm -> 1:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
-                <div class="col-sm-12 mb-3 mb-sm-0  pt-3 mx-3">
-                  <strong>Evening</strong>
-                </div>
-                <div class="row pb-3 mx-4">
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">05:00 pm -> 06:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">06:00 pm -> 07:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0  pt-3 ">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop">07:00 pm -> 08:00 pm</button>
-                    <p class="px-3 fw-light">(4 slots left)</p>
-
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -400,18 +272,17 @@
         <strong class="text-success fs-3">Common Question and Answer</strong>
       </div>
       <div class="card mb-3 mt-2 ">
-        <span><strong>Q Where does Dr. ABhishek Mishra practice? <br>
-            A</strong> Dr. Abhishek Mishra practices at Marvel Multispeciality Hospital - Koramangala 1 Block.</span>
+        <span><strong>Q Where does {{fname}} {{lname}} practice? <br>
+            A</strong> {{fname}} {{lname}} practices at {{clocation}}, {{ccity}}, {{cstate}}, {{czip}}.</span>
       </div>
       <div class="card mb-3 ">
-        <span><strong>Q How can I take Dr. Abhishek Mishra's appointment ? <br>
-            A</strong> You can take Dr. Abhishek Mishra's appointment online through BookMyDoc for in-clinic visit with
+        <span><strong>Q How can I take {{fname}} {{lname}}'s appointment ? <br>
+            A</strong> You can book {{fname}} {{lname}}'s appointment online through BookMyDoc for in-clinic visit with
           the doctor.</span>
       </div>
       <div class="card mb-3 ">
-        <span><strong>Q Why do patients visit Dr. Abhishek Mishra? <br>
-            A</strong> Patients frequently visit Dr. Abhishek Mishra for Diabetes Management, Type 1 Diabetes
-          Treatment, Insulin Treatment. To see more reasons visit the doctor's profile on BookMyDoc.</span>
+        <span><strong>Q In what field does {{fname}} {{lname}} specialized in ? <br>
+            A</strong> {{fname}} {{lname}} is a {{specialization}}</span>
       </div>
       <div class="card mb-3 ">
         <span><strong>Q What is Dr. Abhishek Mishra's rating? <br>

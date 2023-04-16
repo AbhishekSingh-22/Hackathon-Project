@@ -6,6 +6,13 @@ from doctor.models import doctordetail
 #Model for handling patient forms
 class patientform(models.Model):
 
+    # Fields for showing filled form to doctor
+    dusername = models.CharField(max_length=50, default='')
+    slot = models.CharField(max_length=20, default="", null=True)
+    slotNum = models.IntegerField(null =True)
+    date = models.DateField(null=True)
+
+    # Details of the patient
     pusername = models.CharField(max_length=50, default='')
     fname= models.CharField(max_length=50, default='', null= True)
     lname = models.CharField(max_length=50, default='', null= True)
@@ -14,7 +21,7 @@ class patientform(models.Model):
     weight = models.IntegerField( null= True)
     bloodgrp= models.CharField(max_length=10, null=True)
     gender = models.CharField(max_length=20,null= True)
-    pemail = models.EmailField(max_length=50, default='') 
+    pemail = models.EmailField(max_length=50, default='', null = True) 
     contact = models.BigIntegerField(null=True)
     state = models.CharField(max_length=50, default='', null= True)
     
@@ -37,6 +44,7 @@ class booking(models.Model):
     patientdetail = models.ForeignKey(patientform, on_delete=models.CASCADE, null=True)
     pusername = models.CharField(max_length=50, null = True)
     pfname = models.CharField(max_length=50, null = True)
+    plname = models.CharField(max_length=50, null = True)
     doctor = models.CharField(max_length=50, default="", null=True)
     slot = models.CharField(max_length=20, default="", null=True)
     slotNum = models.IntegerField(null =True)
@@ -49,3 +57,4 @@ class datewise_slot(models.Model):
     date = models.DateField(null=True)
     morning_updatedSlotdict = models.JSONField(null=True,default=None)
     evening_updatedSlotdict = models.JSONField(null=True, default = None)
+
