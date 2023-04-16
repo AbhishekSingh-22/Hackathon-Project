@@ -64,22 +64,22 @@
         <label for="validationTooltip05" class="form-label">What is your Specialization</label>
         <select class="form-select" id="validationTooltip05" value="{{specialization}}" name="specialization" required>
           <option selected disabled value="">Choose...</option>
-          <option value="allergist">Allergist</option>
-          <option value="cardiologist">Cardiologist</option>
-          <option value="dermatologist">Dermatologist</option>
-          <option value="endocrinologist">Endocrinologist</option>
-          <option value="gastroenterologist">Gastroenterologist</option>
-          <option value="hematologist">Hematologist</option>
-          <option value="neurologist">Neurologist</option>
-          <option value="oncologist">Oncologist</option>
-          <option value="surgeon">Surgeon</option>
-          <option value="ophthalmologist">Ophthalmologist</option>
-          <option value="pediatrician">Pediatrician</option>
-          <option value="psychiatrist">Psychiatrist</option>
-          <option value="pulmonologist">Pulmonologist</option>
-          <option value="radiologist">Radiologist</option>
-          <option value="rheumatologist">Rheumatologist</option>
-          <option value="urologist">Urologist</option>
+          <option value="Allergist">Allergist</option>
+          <option value="Cardiologist">Cardiologist</option>
+          <option value="Dermatologist">Dermatologist</option>
+          <option value="Endocrinologist">Endocrinologist</option>
+          <option value="Gastroenterologist">Gastroenterologist</option>
+          <option value="Hematologist">Hematologist</option>
+          <option value="Neurologist">Neurologist</option>
+          <option value="Oncologist">Oncologist</option>
+          <option value="Surgeon">Surgeon</option>
+          <option value="Ophthalmologist">Ophthalmologist</option>
+          <option value="Pediatrician">Pediatrician</option>
+          <option value="Psychiatrist">Psychiatrist</option>
+          <option value="Pulmonologist">Pulmonologist</option>
+          <option value="Radiologist">Radiologist</option>
+          <option value="Rheumatologist">Rheumatologist</option>
+          <option value="Urologist">Urologist</option>
         </select>
         <div class="invalid-tooltip">
           Please select a valid Specialization
@@ -104,7 +104,16 @@
       </div>
 
       <div class="col-md-12 position-relative">
-        <label for="exampleFormControlTextarea1" class="form-label">Please Tell us about your degree an
+        <label for="exampleFormControlTextarea1" class="form-label">Please Tell us about your
+            Academic qualifications in brief. <span class="fw-light">(will be shared with users)</span></label>
+        <textarea class="form-control" id="validationTooltip22" rows="3" name="shortdesc" value={{shortdesc}} required></textarea>
+        <div class="valid-tooltip">
+            Looks good!
+        </div>
+    </div>
+
+      <div class="col-md-12 position-relative">
+        <label for="exampleFormControlTextarea1" class="form-label">Please Tell us about your
             experience in brief. <span class="fw-light">(will be shared with users)</span></label>
         <textarea class="form-control" id="validationTooltip22" rows="3" name="desc" value={{desc}} required></textarea>
         <div class="valid-tooltip">
