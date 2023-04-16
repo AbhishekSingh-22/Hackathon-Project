@@ -86,6 +86,7 @@
                 <Strong class="text-success fs-3 ">Approved appointments</Strong>
             </div>
             <div class="row mb-4">
+                {% if doc_bookings %}
                 {% for approvedbooking in doc_bookings %}
                 <div class="col-sm-4 mb-3 mb-sm-0">
                     <div class="card">
@@ -209,6 +210,11 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+            <div class="text-center p-3 ">
+                <Strong class="text-success fs-3 ">No Appointments Pending :)</Strong>
+            </div>
+            {% endif %}
         </div>
 
     </div>

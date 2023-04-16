@@ -22,10 +22,10 @@ from datetime import date
 def home(request):
 
     # patient_detail = patientform()
-    if not patientform.objects.filter(fname=request.user.first_name) :
-        patient_detail=patientform(pusername=request.user.username, fname=request.user.first_name, lname=request.user.last_name, pemail=request.user.email)
+    # if not patientform.objects.filter(fname=request.user.first_name) :
+    #     patient_detail=patientform(pusername=request.user.username, fname=request.user.first_name, lname=request.user.last_name, pemail=request.user.email)
 
-        patient_detail.save()
+    #     patient_detail.save()
 
         
 
@@ -156,6 +156,10 @@ def doctorinfo_slot(request):
         'specdegree': selected_doctor.specdegree,
         'license': selected_doctor.license,
         'desc': selected_doctor.desc,
+        'fromtime' : selected_doctor.fromtime,
+        'totime' : selected_doctor.totime,
+        'eveningfromtime' : selected_doctor.eveningfromtime,
+        'eveningtotime' : selected_doctor.eveningtotime,
         'avgtime': selected_doctor.avgtime,
         'housenum': selected_doctor.housenum,
         'hcity': selected_doctor.hcity,
@@ -177,7 +181,9 @@ def doctorinfo_slot(request):
 
 def form(request):
 
-    particular_patient=patientform.objects.filter(pusername= request.user.username)[0]
+    particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+
+    # particular_patient=patientform.objects.filter(pusername= request.user.username)[0]
 
     if request.method == "POST":
 
@@ -189,7 +195,7 @@ def form(request):
         weight = request.POST.get("weight")
         bloodgrp = request.POST.get("bloodgrp")
         gender = request.POST.get("gender")
-        email = request.POST.get("email")
+        # email = request.POST.get("email")
 
         contact = request.POST.get("contact")
         
@@ -206,6 +212,17 @@ def form(request):
         medicalhistory = request.POST.get("medicalhistory")
 
         #Updating values in model
+        particular_patient=patientform()
+
+        particular_patient.dusername = particular_booking.doctor
+        particular_patient.slot = particular_booking.slot
+        particular_patient.slotNum = particular_booking.slotNum
+        particular_patient.date = particular_booking.date
+        
+        particular_patient.pusername = request.user.username
+        particular_patient.pemail = request.user.email
+        particular_patient.fname = fname
+        particular_patient.lname = lname
         particular_patient.age = age
         particular_patient.height = height
         particular_patient.weight = weight
@@ -225,7 +242,7 @@ def form(request):
 
         # Handling Booking table for patientDetails
 
-        particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
+        
         particular_booking.patientdetail= particular_patient
 
         particular_booking.save()
@@ -260,28 +277,28 @@ def form(request):
     
 
     params={
-        "fname": particular_patient.fname,
-        "lname": particular_patient.lname,
-        "age": particular_patient.age,
-        "height": particular_patient.height,
-        "weight": particular_patient.weight,
-        "bloodgrp": particular_patient.bloodgrp,
-        "gender": particular_patient.gender,
-        "email": particular_patient.pemail,
+        # "fname": particular_patient.fname,
+        # "lname": particular_patient.lname,
+        # "age": particular_patient.age,
+        # "height": particular_patient.height,
+        # "weight": particular_patient.weight,
+        # "bloodgrp": particular_patient.bloodgrp,
+        # "gender": particular_patient.gender,
+        "email": request.user.email,
 
-        "contact": particular_patient.contact,
+        # "contact": particular_patient.contact,
         
-        "state": particular_patient.state,
+        # "state": particular_patient.state,
         
-        "allergy": particular_patient.allergy,
+        # "allergy": particular_patient.allergy,
         
-        "medications": particular_patient.goingonMedications,
+        # "medications": particular_patient.goingonMedications,
         
-        "insurance": particular_patient.insurance,
+        # "insurance": particular_patient.insurance,
         
-        "drughistory": particular_patient.drughistory,
-        "symptoms": particular_patient.symptoms,
-        "medicalhistory": particular_patient.medicalhistory
+        # "drughistory": particular_patient.drughistory,
+        # "symptoms": particular_patient.symptoms,
+        # "medicalhistory": particular_patient.medicalhistory
         
     }
 
@@ -398,6 +415,10 @@ def doctorinfo_date(request):
         'specdegree': selected_doctor.specdegree,
         'license': selected_doctor.license,
         'desc': selected_doctor.desc,
+        'fromtime' : selected_doctor.fromtime,
+        'totime' : selected_doctor.totime,
+        'eveningfromtime' : selected_doctor.eveningfromtime,
+        'eveningtotime' : selected_doctor.eveningtotime,
         'avgtime': selected_doctor.avgtime,
         'housenum': selected_doctor.housenum,
         'hcity': selected_doctor.hcity,

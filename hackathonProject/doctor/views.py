@@ -18,6 +18,7 @@ from django.core.files.base import ContentFile
 from .models import doctordetail, slot_table                   # Importing doctordetail table/model
 from patient.models import datewise_slot, booking, patientform
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -28,10 +29,13 @@ def doctorhome(request):
 
         doc_bookings = booking.objects.filter(doctor = request.user.username, status = "Unapproved")
 
-        params={
-            "doc_bookings" : doc_bookings
-        }
+        # patient_detail = patientform.objects.filter(dusername = request.user.username)
+        # print( doc_bookings, patient_detail)
 
+        # infoList = [doc_bookings, patient_detail]
+        params={
+            "doc_bookings" : doc_bookings,
+        }
         
 
         return render(request, 'doctor/DoctorHomePage.html',params)
@@ -58,8 +62,10 @@ def viewmore(request):
         patientusername = request.POST.get("patientusername")
         pfname = request.POST.get("fname")
         plname = request.POST.get("lname")
+        slot = request.POST.get("slot")
+        slotNum = request.POST.get("slotNum")
        
-        patientdetail = patientform.objects.filter(pusername = patientusername, fname = pfname, lname = plname)[0]
+        patientdetail = patientform.objects.filter(pusername = patientusername,dusername = request.user.username, slot = slot, slotNum = slotNum)[0]
         params={
         "fname": patientdetail.fname,
         "lname": patientdetail.lname,
@@ -113,7 +119,7 @@ def updateapprove(request):
 
         # -------------- Appointment Approval mail starts ----------------------------------
         subject = "Approval of Appointment Booking"
-        message = "Dear" + user_instance.first_name +''+ user_instance.last_name+ "\n" + "We are pleased to inform you that your appointment with"+ doctordetail_instance.fname +' '+ doctordetail_instance.lname + "has been approved. Your appointment is scheduled for " + booking_instance.date + ", " + booking_instance.slot +"at "+ doctordetail_instance.clocation+ "\n\n" +"Our team is prepared to provide you with excellent service, and we are confident that this meeting will be productive and helpful for you. Please carry all the neccessary documents/medical reports with you in order to have a Seamless medical appointment"+ "\n\n" + "Please let us know if you have any questions or concerns about the appointment."+"\n\n"+"Thank you for choosing our BookMyDoc. for your appointment, and we look forward to a healthy appointment with you."+"\n\n"+"Sincerely,"+"\n\n"+ "BookMyDoc. Team"
+        message = "Dear" + user_instance.first_name +''+ user_instance.last_name+ "\n" + "We are pleased to inform you that your appointment with"+ doctordetail_instance.fname +' '+ doctordetail_instance.lname + "has been approved. Your appointment is scheduled for "+ str(booking_instance.date) + ", " + booking_instance.slot +"at "+ doctordetail_instance.clocation+ "\n\n" +"Our team is prepared to provide you with excellent service, and we are confident that this meeting will be productive and helpful for you. Please carry all the neccessary documents/medical reports with you in order to have a Seamless medical appointment"+ "\n\n" + "Please let us know if you have any questions or concerns about the appointment."+"\n\n"+"Thank you for choosing our BookMyDoc. for your appointment, and we look forward to a healthy appointment with you."+"\n\n"+"Sincerely,"+"\n\n"+ "BookMyDoc. Team"
         from_email= settings.EMAIL_HOST_USER
         to_list= [pemail]
 
@@ -440,12 +446,14 @@ def cancel(request):
 
         # -------------- Cancellation mail starts ----------------------------------
         subject = "Cancellation of Appointment Booking"
-        message = "Dear" + user_instance.first_name +''+ user_instance.last_name+ "\n" + "We regret to inform you that your appointment booking scheduled for" + date + " " + slot + "with\nour organization has been cancelled due to unforeseen circumstances.\n\n" + "We apologize for any inconvenience this may cause and understand the inconvenience it\nmay cause you. In the meanwhile you can book an another appointment for other slots"+ "\n\n" + "If you have any questions or concerns about the cancellation, please do not hesitate to \ncontact us. We will be more than happy to assist you."+"\n\n"+"Thank you for your understanding and we look forward to serving you in the future."+"\n\n"+"Sincerely,"+"\n\n"+ "BookMyDoc. Team"
+        message = "Dear" + user_instance.first_name +''+ user_instance.last_name+ "\n" + "We regret to inform you that your appointment booking scheduled for" + str(date) + " " + slot + "with\nour organization has been cancelled due to unforeseen circumstances.\n\n" + "We apologize for any inconvenience this may cause and understand the inconvenience it\nmay cause you. In the meanwhile you can book an another appointment for other slots"+ "\n\n" + "If you have any questions or concerns about the cancellation, please do not hesitate to \ncontact us. We will be more than happy to assist you."+"\n\n"+"Thank you for your understanding and we look forward to serving you in the future."+"\n\n"+"Sincerely,"+"\n\n"+ "BookMyDoc. Team"
         from_email= settings.EMAIL_HOST_USER
         to_list= [pemail]
 
         send_mail(subject, message, from_email, to_list, fail_silently= True)          # mail sent
 
         #--------------Cancellation mail ends ------------------------------
-
-        return redirect("doctorapproved")
+        prev_page = request.META.get('HTTP_REFERER')
+        
+        return HttpResponseRedirect(prev_page)
+        # return redirect("doctorapproved")

@@ -102,11 +102,12 @@
                 <Strong class="text-success fs-3 ">Appointments</Strong>
             </div>
             <div class="row mb-4">
+                {% if doc_bookings%}
                 {% for booking in doc_bookings %}
                 <div class="col-sm-4 mb-3 mb-sm-0">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">{{booking.pfname}} {{booking.plname}}</h5>
+                            <h5 class="card-title">{{booking.patientdetail.fname}} {{booking.patientdetail.lname}}</h5>
                             <span class="text-success fw-lighter">({{booking.slot}}) ({{booking.date}})</span>
                             <p class="card-text">{{booking.patientdetail.symptoms}}</p>
                             <form action="updateapprove" method="post" style="display : inline;">
@@ -121,26 +122,28 @@
                             </form>
 
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#{{approvedbooking.pk}}">
+                                data-bs-target="#{{booking.pk}}">
                                 Cancel
                             </button>
                             <form action="viewmore" method="post" style="display : inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="patientusername" value="{{booking.pusername}}">
-                                <input type="hidden" name="fname" value="{{booking.pfname}}">
-                                <input type="hidden" name="lname" value="{{booking.plname}}">
+                                <input type="hidden" name="fname" value="{{patientdetail.fname}}">
+                                <input type="hidden" name="lname" value="{{patientdetail.lname}}">
+                                <input type="hidden" name="slot" value="{{booking.slot}}">
+                                <input type="hidden" name="slotNum" value="{{booking.slotNum}}">
                             <button type="submit" class="btn btn-outline-success float-end">View More</button>
                         </form>
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="{{approvedbooking.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="{{booking.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <form action="cancel" method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="pusername" value="{{approvedbooking.pusername}}">
-                        <input type="hidden" name="pk" value="{{approvedbooking.auto_field}}">
-                        <input type="hidden" name="date" value="{{approvedbooking.date}}">
-                        <input type="hidden" name="slot" value="{{approvedbooking.slot}}">
+                        <input type="hidden" name="pusername" value="{{booking.pusername}}">
+                        <input type="hidden" name="pk" value="{{booking.auto_field}}">
+                        <input type="hidden" name="date" value="{{booking.date}}">
+                        <input type="hidden" name="slot" value="{{booking.slot}}">
                         <!-- <input type="hidden" name="">
                         <input type="hidden" name=""> -->
                     <div class="modal-dialog">
@@ -230,16 +233,24 @@
                         
                         </div>
                     </div>
-                </form>
+                
                 </div>
+            </form>
+            {% endfor %}
+            {% else %}
+            <div class="text-center p-3 ">
+                <Strong class="text-success fs-3 ">No Upcoming Appointments</Strong>
+            </div>
+            {% endif %}
                 <!-- __________________________________________________________________for contents inside Modal end_____________________________________ -->
-                                    </div>
+                                    <!-- </div>
                                 </div>
                             </div>
-                            {% endfor %}
+                           
                     </div>
             
-                </div>
+                </div> -->
+                
                 <!-- <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
