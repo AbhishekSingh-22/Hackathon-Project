@@ -17,6 +17,7 @@ class doctordetail(models.Model):
     license = models.FileField(upload_to="doctor/files", default='')
 
     #Description of doctor in detail
+    shortdesc = models.CharField(max_length=500,default='', null=True)
     desc = models.CharField(max_length=500,default='', null=True)
 
     # When doctor is available
