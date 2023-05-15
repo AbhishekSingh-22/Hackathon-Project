@@ -1,5 +1,5 @@
-   <!-- loading static files -->
-   {% load static %}
+<!-- loading static files -->
+{% load static %}
 
 <!doctype html>
 <html lang="en">
@@ -79,12 +79,12 @@
   <!-- Alert button start -->
 
   {% for message in messages%}
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <strong>Message:</strong>{{message}}  
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endfor %}
-      
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <strong>Message:</strong>{{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
   {% if not user.is_authenticated %}
 
   <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -92,14 +92,14 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 
-  
+
   {%endif%}
-  
+
   <!-- Alert button end -->
 
 
   <!-- ____________________________________________ crousal starts here___________________________________________________________ -->
-  <div id="carouselExampleAutoplaying" ></div>
+  <div id="carouselExampleAutoplaying"></div>
   <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
@@ -108,17 +108,17 @@
       <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active" >
+      <div class="carousel-item active">
         <img src="{% static 'login/index/nurse.png' %}" class="d-block w-50 float-end crousal-img" alt="...">
         <div class="mx-5 position-absolute top-50 start-0 translate-middle-y">
-          <h5 class="fs-1 fw-bolder pb-3" data-aos="fade-up" >Welcome to BookMyDoc.</h5>
-          <p class="fs-3 pb-3" data-aos="fade-up" >We welcome you to a one stop destination to avoid long cues !!
+          <h5 class="fs-1 fw-bolder pb-3" data-aos="fade-up">Welcome to BookMyDoc.</h5>
+          <p class="fs-3 pb-3" data-aos="fade-up">We welcome you to a one stop destination to avoid long cues !!
             <br> If you want Appointment of doctors nearest to you then <br> click below to sign in
           </p>
-          <a class="btn btn-success w-50 fs-2 " href="/signin" role="button" >Sign In</a>
+          <a class="btn btn-success w-50 fs-2 " href="/signin" role="button">Sign In</a>
         </div>
       </div>
-      <div class="carousel-item" >
+      <div class="carousel-item">
         <img src="{% static 'login/index/doctors.png' %}" class="d-block w-50 h-50 crousal-img" alt="...">
         <div class=" mx-5 position-absolute top-50 end-0 translate-middle-y">
           <h5 class="fs-1 fw-bolder pb-3 crousal-text">Welcome Doctors</h5>
@@ -132,7 +132,7 @@
       <div class="carousel-item">
         <img src="{% static 'login/index/medici.jpg' %}" class="d-block w-100 h-auto opacity-75 crousal-img" alt="...">
         <div class="mx-5 position-absolute top-50 start-0 translate-middle-y">
-          <h5 class="fs-1 fw-bolder pb-3" >Medicine Notification</h5>
+          <h5 class="fs-1 fw-bolder pb-3">Medicine Notification</h5>
           <p class="fs-3">Hey there !! Are you worried about your medicines timings <br> dont worry we will cover you
             up. We can notify you about <br> your medicines our timing is accurate.</p>
         </div>
@@ -246,7 +246,7 @@
               {% csrf_token %}
               <input type="hidden" name="doctorusername" value="{{doc.dusername}}">
               <button type="submit" class="btn btn-success">BOOK NOW</button>
-           </form>
+            </form>
           </div>
         </div>
       </div>
@@ -354,164 +354,171 @@
   </div>
   <!-- _______________________________________________doctors ends here _______________________________________________________________ -->
 
-  <!--________________________________________________ symptom starts ____________________________________________________________  -->
-  <div class="symptoms" data-aos="fade-up">
-    <div class="container-fluid">
-      <h2>Symptoms</h2>
-      <div class="row">
-        <div class="col-sm-2 mb-3 mb-sm-0">
-          <div class="card" style="height: 23rem;">
-            <img src="{% static 'login/index/tb.jpg' %}" class="card-img-top" alt="..." style="height: 8rem;">
-            <div class="card-body">
-              <h5 class="card-title">Tuberculosis</h5>
-              <p class="card-text">
-              <h6>Symptoms</h6>
-              <ul>
-                <li>Coughing up blood or mucus.</li>
-                <li>Night sweats.</li>
-                <li>Fatigue.</li>
-              </ul>
-              </p>
+      <!--________________________________________________ symptom starts ____________________________________________________________  -->
+      <div class="symptoms" data-aos="fade-up">
+        <div class="container-fluid">
+          <h2>Symptoms</h2>
+          <div class="row">
+            <div class="col-sm-2 mb-3 mb-sm-0">
+              <div class="card" style="height: 23rem;">
+                <img src="{% static 'login/index/tb.jpg' %}" class="card-img-top" alt="..." style="height: 8rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Tuberculosis</h5>
+                  <p class="card-text">
+                  <h6>Symptoms</h6>
+                  <ul>
+                    <li>Coughing up blood or mucus.</li>
+                    <li>Night sweats.</li>
+                    <li>Fatigue.</li>
+                  </ul>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="card" style="height: 23rem;">
-            <img src="{% static 'login/index/ha.jpg' %}" class="card-img-top" alt="..." style="height: 8rem;">
-            <div class="card-body">
-              <h5 class="card-title">Heart Attack</h5 <p class="card-text">
-              <h6>Symptoms</h6>
-              <ul>
-                <li>Chest Pain</li>
-                <li>Shortness of breath</li>
-                <li>unusually tired</li>
-              </ul>
-              </p>
+            <div class="col-sm-2">
+              <div class="card" style="height: 23rem;">
+                <img src="{% static 'login/index/ha.jpg' %}" class="card-img-top" alt="..." style="height: 8rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Heart Attack</h5 <p class="card-text">
+                  <h6>Symptoms</h6>
+                  <ul>
+                    <li>Chest Pain</li>
+                    <li>Shortness of breath</li>
+                    <li>unusually tired</li>
+                  </ul>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="card" style="height: 23rem;">
-            <img src="{% static 'login/index/cancer.jpg' %}" class="card-img-top" alt="..." style="height: 8rem;">
-            <div class="card-body">
-              <h5 class="card-title">Cancer</h5>
-              <p class="card-text">
-              <h6>Symptoms</h6>
-              <ul>
-                <li>unusual bleeding</li>
-                <li>unexplained Lumps</li>
-                <li>Back Pain</li>
-              </ul>
-              </p>
+            <div class="col-sm-2">
+              <div class="card" style="height: 23rem;">
+                <img src="{% static 'login/index/cancer.jpg' %}" class="card-img-top" alt="..." style="height: 8rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Cancer</h5>
+                  <p class="card-text">
+                  <h6>Symptoms</h6>
+                  <ul>
+                    <li>unusual bleeding</li>
+                    <li>unexplained Lumps</li>
+                    <li>Back Pain</li>
+                  </ul>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="card" style="height: 23rem;">
-            <img src="{% static 'login/index/flu.png' %}" class="card-img-top" alt="..." style="height: 8rem;">
-            <div class="card-body">
-              <h5 class="card-title">Flu</h5>
-              <p class="card-text">
-              <h6>Symptoms</h6>
-              <ul>
-                <li>Fever</li>
-                <li>Chest Discomfort</li>
-                <li>Headache</li>
-                <li>sneezing</li>
-              </ul>
-              </p>
+            <div class="col-sm-2">
+              <div class="card" style="height: 23rem;">
+                <img src="{% static 'login/index/flu.png' %}" class="card-img-top" alt="..." style="height: 8rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Flu</h5>
+                  <p class="card-text">
+                  <h6>Symptoms</h6>
+                  <ul>
+                    <li>Fever</li>
+                    <li>Chest Discomfort</li>
+                    <li>Headache</li>
+                    <li>sneezing</li>
+                  </ul>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="card" style="height: 23rem;">
-            <img src="{% static 'login/index/diabaties.gif' %}" class="card-img-top" alt="..." style="height: 8rem;">
-            <div class="card-body">
-              <h5 class="card-title">Diabetes</h5>
-              <p class="card-text">
-              <h6>Symptoms</h6>
-              <ul>
-                <li>Urinate a lot </li>
-                <li>Very hungry and thirsty</li>
-                <li>Have blurry vision</li>
-                <li>Dry skin</li>
-              </ul>
-              </p>
+            <div class="col-sm-2">
+              <div class="card" style="height: 23rem;">
+                <img src="{% static 'login/index/diabaties.gif' %}" class="card-img-top" alt="..."
+                  style="height: 8rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Diabetes</h5>
+                  <p class="card-text">
+                  <h6>Symptoms</h6>
+                  <ul>
+                    <li>Urinate a lot </li>
+                    <li>Very hungry and thirsty</li>
+                    <li>Have blurry vision</li>
+                    <li>Dry skin</li>
+                  </ul>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="card" style="height: 23rem;">
-            <img src="{% static 'login/index/covid.jpg' %}" class="card-img-top" alt="..." style="height: 8rem; ">
-            <div class="card-body">
-              <h5 class="card-title">COVID-19</h5 <p class="card-text">
-              <h6>Symptoms</h6>
-              <ul>
-                <li>Headache and Muscle Ache</li>
-                <li>Voice Changes</li>
-                <li>Runny and Stuffy nose</li>
-              </ul>
-              </p>
+            <div class="col-sm-2">
+              <div class="card" style="height: 23rem;">
+                <img src="{% static 'login/index/covid.jpg' %}" class="card-img-top" alt="..." style="height: 8rem; ">
+                <div class="card-body">
+                  <h5 class="card-title">COVID-19</h5 <p class="card-text">
+                  <h6>Symptoms</h6>
+                  <ul>
+                    <li>Headache and Muscle Ache</li>
+                    <li>Voice Changes</li>
+                    <li>Runny and Stuffy nose</li>
+                  </ul>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-      </div>
-    </div>
-  </div> 
-
-  <!--________________________________________________ symptom ends ____________________________________________________________  -->
-
-  <!--________________________________________________ booking of appointment starts ____________________________________________________________  -->
-
-  <div class="container" data-aos="fade-up">
-    <h2>Book an Appointment near you</h2>
-    <div class="row">
-      <div class="col-sm-3 mb-3 mb-sm-0">
-
-        <div class="card" style="width: 18rem;">
-          <img src="{% static 'login/index/dentist.jpg' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Dentist</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-success">Book Now</a>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
 
-        <div class="card" style="width: 18rem;">
-          <img src="{% static 'login/index/babyDOc.jpg' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Paediatrician</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-success">Book Now</a>
+      <!--________________________________________________ symptom ends ____________________________________________________________  -->
+
+      <!--________________________________________________ booking of appointment starts ____________________________________________________________  -->
+
+      <div class="container" data-aos="fade-up">
+        <h2>Book an Appointment near you</h2>
+        <div class="row">
+          <div class="col-sm-3 mb-3 mb-sm-0">
+
+            <div class="card" style="width: 18rem;">
+              <img src="{% static 'login/index/dentist.jpg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Dentist</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                  card's
+                  content.</p>
+                <a href="#" class="btn btn-success">Book Now</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
+          <div class="col-sm-3">
 
-        <div class="card" style="width: 18rem;">
-          <img src="{% static 'login/index/gynac.jpg' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Gynecologist</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-success">Book Now</a>
+            <div class="card" style="width: 18rem;">
+              <img src="{% static 'login/index/babyDOc.jpg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Paediatrician</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                  card's
+                  content.</p>
+                <a href="#" class="btn btn-success">Book Now</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
+          <div class="col-sm-3">
 
-        <div class="card" style="width: 18rem;">
-          <img src="{% static 'login/index/physio.jpg' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Physiotherapist</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-success">Book Now</a>
+            <div class="card" style="width: 18rem;">
+              <img src="{% static 'login/index/gynac.jpg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Gynecologist</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                  card's
+                  content.</p>
+                <a href="#" class="btn btn-success">Book Now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+
+            <div class="card" style="width: 18rem;">
+              <img src="{% static 'login/index/physio.jpg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Physiotherapist</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                  card's
+                  content.</p>
+                <a href="#" class="btn btn-success">Book Now</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -528,7 +535,8 @@
         <div class="col-md-10 col-xl-8 text-center">
           <h2 class="mb-4">Review's</h2>
           <p class="mb-4 pb-2 mb-md-5 pb-md-0">
-            "Read Real Customer Reviews and Testimonials: Discover What People Are Saying About Our Products/Services and Their Experience with Our Company"
+            "Read Real Customer Reviews and Testimonials: Discover What People Are Saying About Our
+            Products/Services and Their Experience with Our Company"
           </p>
         </div>
       </div>
@@ -542,7 +550,10 @@
           <h5 class="mb-3">Maria Smantha</h5>
           <!-- <h6 class="text-primary mb-3">Web Developer</h6> -->
           <p class="px-xl-3">
-            <i class="fas fa-quote-left pe-2"></i>"I had a great experience with this healthcare provider. The staff were friendly and knowledgeable, and I felt like they really cared about my health and wellbeing. The facilities were clean and modern, and the appointments always started on time. I would definitely recommend this provider to anyone looking for high-quality healthcare services."
+            <i class="fas fa-quote-left pe-2"></i>"I had a great experience with this healthcare provider. The staff
+            were friendly and knowledgeable, and I felt like they really cared about my health and wellbeing. The
+            facilities were clean and modern, and the appointments always started on time. I would definitely
+            recommend this provider to anyone looking for high-quality healthcare services."
           </p>
           <ul class="list-unstyled d-flex justify-content-center mb-0">
             <li>
@@ -590,7 +601,10 @@
           <h5 class="mb-3">Lisa Cudrow</h5>
           <!-- <h6 class="text-primary mb-3">Graphic Designer</h6> -->
           <p class="px-xl-3">
-            <i class="fas fa-quote-left pe-2"></i>"I've been a patient with this healthcare provider for several years, and I've always been impressed with the level of care I receive. The doctors are highly skilled and knowledgeable, and they take the time to listen to my concerns and answer my questions. The staff are also very helpful and friendly. I feel like I'm in good hands with this provider."
+            <i class="fas fa-quote-left pe-2"></i>"I've been a patient with this healthcare provider for several
+            years, and I've always been impressed with the level of care I receive. The doctors are highly skilled
+            and knowledgeable, and they take the time to listen to my concerns and answer my questions. The staff
+            are also very helpful and friendly. I feel like I'm in good hands with this provider."
           </p>
           <ul class="list-unstyled d-flex justify-content-center mb-0">
             <li>
@@ -638,7 +652,11 @@
           <h5 class="mb-3">John Smith</h5>
           <!-- <h6 class="text-primary mb-3">Marketing Specialist</h6> -->
           <p class="px-xl-3">
-            <i class="fas fa-quote-left pe-2"></i>"I recently had to visit the emergency room at this hospital, and I was blown away by the level of care I received. The doctors and nurses were incredibly attentive and responsive, and they made sure I was comfortable and well-informed throughout the entire process. Despite the stressful situation, I felt confident and safe in their hands. I'm so grateful for their expertise and compassion."
+            <i class="fas fa-quote-left pe-2"></i>"I recently had to visit the emergency room at this hospital, and
+            I was blown away by the level of care I received. The doctors and nurses were incredibly attentive and
+            responsive, and they made sure I was comfortable and well-informed throughout the entire process.
+            Despite the stressful situation, I felt confident and safe in their hands. I'm so grateful for their
+            expertise and compassion."
           </p>
           <ul class="list-unstyled d-flex justify-content-center mb-0">
             <li>
@@ -698,7 +716,7 @@
             </svg>
           </a>
         </div>
-        <div class="col-sm-1 ">
+        <div class="col-sm-1 mb-3 mb-sm-0 ">
           <a class=" btn btn-light" href="#" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin"
               viewBox="0 0 16 16">
@@ -707,7 +725,7 @@
             </svg>
           </a>
         </div>
-        <div class="col-sm-1 ">
+        <div class="col-sm-1  mb-3 mb-sm-0">
           <a class=" btn btn-light" href="#" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram"
               viewBox="0 0 16 16">
@@ -716,7 +734,7 @@
             </svg>
           </a>
         </div>
-        <div class="col-sm-1 ">
+        <div class="col-sm-1  mb-3 mb-sm-0">
           <a class=" btn btn-light" href="#" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter"
               viewBox="0 0 16 16">
@@ -727,12 +745,12 @@
         </div>
       </div>
       <div class="column">
-        <div class="g-col-12" href="#">Important Links</div>
+        <div class="g-col-12 fw-bold pt-2" href="#">Important Links</div>
         <div class="column">
-          <a class="g-col-12" href="#">About Us
+          <a class="g-col-4 nav-link pt-4" href="#">About Us </a>
+          <a class="g-col-4 nav-link pt-2" href="#">Services</a>
+          <a class="g-col-4 nav-link pt-2 pb-3" href="#">Tutorial</a>
         </div>
-        <a class="g-col-12" href="#">Services</a>
-        <a class="g-col-12" href="#">Tutorial</a>
       </div>
     </div>
     </div>
