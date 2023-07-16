@@ -23,6 +23,11 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 def doctorhome(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
+
+
     doctor_detail=doctordetail()
 
     if doctordetail.objects.filter(dusername=request.user.username):
@@ -58,6 +63,9 @@ def doctorhome(request):
 
 
 def viewmore(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     if request.method == "POST":
         patientusername = request.POST.get("patientusername")
         pfname = request.POST.get("fname")
@@ -95,6 +103,9 @@ def viewmore(request):
         return render(request, "doctor/PatientDetail.html", params)
         
 def updateapprove(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     if request.method == "POST":
         auto_field = request.POST.get("auto_field")
         pusername = request.POST.get("patientusername")
@@ -127,7 +138,7 @@ def updateapprove(request):
 
         #--------------Appointment Approval mail ends ------------------------------
 
-
+        messages.success(request,"Appointment Status changed")
 
         return redirect("doctorhome")
 
@@ -135,6 +146,9 @@ def updateapprove(request):
 
 
 def doctordetailform(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+    
     particular_doc=doctordetail.objects.filter(dusername= request.user.username)[0]
     if request.method=="POST":
         
@@ -146,6 +160,7 @@ def doctordetailform(request):
         specialization=request.POST.get("specialization")
         specdegree=request.FILES.get("specdegree")
         license=request.FILES.get("license")
+        shortdesc=request.POST.get("shortdesc")
         desc=request.POST.get("desc")
         fromtime=request.POST.get("fromtime")
         totime=request.POST.get("totime")
@@ -198,6 +213,7 @@ def doctordetailform(request):
 
             particular_doc.license = license
 
+        particular_doc.shortdesc = shortdesc
         particular_doc.desc = desc
         particular_doc.fromtime = fromtime
         particular_doc.totime = totime
@@ -391,6 +407,7 @@ def doctordetailform(request):
         'specialization': particular_doc.specialization,
         'specdegree': particular_doc.specdegree,
         'license': particular_doc.license,
+        'shortdesc': particular_doc.shortdesc,
         'desc': particular_doc.desc,
         'morningfromtime' : particular_doc.fromtime,
         'morningtotime' : particular_doc.totime,
@@ -418,6 +435,9 @@ def doctordetailform(request):
 
 
 def doctorapproved(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     doc_bookings = booking.objects.filter(doctor = request.user.username, status = "Approved")
 
     params={
@@ -455,5 +475,7 @@ def cancel(request):
         #--------------Cancellation mail ends ------------------------------
         prev_page = request.META.get('HTTP_REFERER')
         
+        messages.success(request,"Appointment Status changed")
+
         return HttpResponseRedirect(prev_page)
         # return redirect("doctorapproved")

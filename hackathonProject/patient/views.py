@@ -20,6 +20,9 @@ from datetime import date
 
 # Create your views here.
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
 
     # patient_detail = patientform()
     # if not patientform.objects.filter(fname=request.user.first_name) :
@@ -44,6 +47,9 @@ def home(request):
     
 
 def doctorinfo_slot(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+    
     current_booking = booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
     # Details of the doctor selected by patient
@@ -155,6 +161,7 @@ def doctorinfo_slot(request):
         'specialization': selected_doctor.specialization,
         'specdegree': selected_doctor.specdegree,
         'license': selected_doctor.license,
+        'shortdesc': selected_doctor.shortdesc,
         'desc': selected_doctor.desc,
         'fromtime' : selected_doctor.fromtime,
         'totime' : selected_doctor.totime,
@@ -180,6 +187,9 @@ def doctorinfo_slot(request):
 
 
 def form(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
 
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
@@ -311,6 +321,9 @@ def form(request):
 
 def updatebooking_after_docselection(request):          #Updation of booking table after choosing a doctor in home page
 
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     if request.method == "POST":
         dusername = request.POST.get("doctorusername")
 
@@ -333,6 +346,9 @@ def updatebooking_after_docselection(request):          #Updation of booking tab
 
 def updatebooking_after_goingbackdate(request):                 # updation after clicking back button in doctors info page
 
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
     particular_booking.delete()
@@ -341,6 +357,9 @@ def updatebooking_after_goingbackdate(request):                 # updation after
 
 
 def updatebooking_after_goingbackslot(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
     particular_booking.date = None
@@ -353,6 +372,10 @@ def updatebooking_after_goingbackslot(request):
 
 
 def updatebooking_after_logout(request):                 # updation after clicking back button in doctors info page
+
+    if not request.user.is_authenticated:
+        return redirect("index")
+
 
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
@@ -367,6 +390,10 @@ def updatebooking_after_logout(request):                 # updation after clicki
     return redirect("signout")
 
 def updatebooking_after_slotselection(request):
+
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
     if request.method == "POST":
@@ -387,6 +414,9 @@ def updatebooking_after_slotselection(request):
 
 
 def updatebooking_after_goingbackform(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+    
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
 
     particular_booking.slot= None
@@ -396,6 +426,9 @@ def updatebooking_after_goingbackform(request):
 
 def doctorinfo_date(request):
 
+    if not request.user.is_authenticated:
+        return redirect("index")
+        
 
     particular_booking=booking.objects.filter(Q(pusername= request.user.username) & Q(pfname= request.user.first_name) & Q(bookingid= request.user.id)).last()
     
@@ -414,6 +447,7 @@ def doctorinfo_date(request):
         'specialization': selected_doctor.specialization,
         'specdegree': selected_doctor.specdegree,
         'license': selected_doctor.license,
+        'shortdesc': selected_doctor.shortdesc,
         'desc': selected_doctor.desc,
         'fromtime' : selected_doctor.fromtime,
         'totime' : selected_doctor.totime,
@@ -436,6 +470,7 @@ def doctorinfo_date(request):
     
 
     if request.method == "POST":
+        
         selected_date = request.POST.get("date")
 
         particular_booking.date= selected_date

@@ -40,7 +40,10 @@
           <li class="nav-item">
             <a class="nav-link" href="#doctors">Doctors</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a class="nav-link" href="#reviews">Reviews</a>
+          </li>
+          {% comment %} <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Services
             </a>
@@ -55,12 +58,12 @@
                 <a class="dropdown-item" href="/html/contactus.html">Contact Us</a>
               </li>
             </ul>
-          </li>
+          </li> {% endcomment %}
           {% comment %} <li class="login px-4 mx-1">
             <a class="btn btn-outline-success" href="/docsignin">For Doctors</a>
           </li> {% endcomment %}
-          <li class="login px-4 mx-5">
-            <a class="btn btn btn-outline-success" href="/signout" role="button">Log out</a>
+          <li class="login px-4 mx-5 float-end" >
+            <a class="btn btn btn-outline-success " href="/signout" role="button" style="margin-left:34px;">Log out</a>
           </li>
           <!-- <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
@@ -109,9 +112,8 @@
         <div class="mx-5 position-absolute top-50 start-0 translate-middle-y">
           <h5 class="fs-1 fw-bolder pb-3" data-aos="fade-up" >Welcome to BookMyDoc.</h5>
           <p class="fs-3 pb-3" data-aos="fade-up" >We welcome you to a one stop destination to avoid long cues !!
-            <br> If you want Appointment of doctors nearest to you then <br> click below to sign in
+            <br> If you want Appointment of doctors nearest to you then start booking
           </p>
-          <a class="btn btn-success w-50 fs-2 " href="/signin" role="button" >Sign In</a>
         </div>
       </div>
       <div class="carousel-item" >
@@ -120,8 +122,7 @@
           <h5 class="fs-1 fw-bolder pb-3 crousal-text">Welcome Doctors</h5>
           <p class="fs-3 "> Be a part of us and avoid having a large croud in front of your <br> cabin or
             clinic.Patients
-            are waiting for you !!what are you waiting for <br>click below to sign in. <br><br>
-            <a class="btn btn-success w-50 fs-2" href="/docsignin" role="button">Sign In</a>
+            are waiting for you !!what are you waiting for.
           </p>
         </div>
       </div>
@@ -236,7 +237,7 @@
           <div class="card-body">
             <h5 class="card-title">{{doc.fname}}</h5>
             <p class="card-text">Specialization : {{doc.specialization}}</p>
-            <p class="card-text">{{doc.desc}}</p>
+            <p class="card-text">{{doc.shortdesc}}</p>
             <!-- <a href="form" class="btn btn-success" >Book now</a> -->
             <form action="/user/updatebookingads" method="post">
               {% csrf_token %}
@@ -273,7 +274,7 @@
     </div> -->
 
 
-    <div class="row">
+    <!--  <div class="row">
       <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card" style="width: 25rem;">
           <img src="{% static 'login/index/doc-4.jpg' %}" class="card-img-top" alt="...">
@@ -347,7 +348,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- _______________________________________________doctors ends here _______________________________________________________________ -->
 
   <!--________________________________________________ symptom starts ____________________________________________________________  -->
@@ -518,15 +519,13 @@
 
 
   <!-- ______________________________________________________________review starts_______________________________________________________ -->
-  <div class="container-fluid text-bg-secondary mt-5 pb-5" data-aos="fade-up">
+  <div class="container-fluid text-bg-secondary mt-5 pb-5" id="reviews" data-aos="fade-up">
     <section>
       <div class="row d-flex justify-content-center">
         <div class="col-md-10 col-xl-8 text-center">
           <h2 class="mb-4">Review's</h2>
           <p class="mb-4 pb-2 mb-md-5 pb-md-0">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet
-            numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum
-            quisquam eum porro a pariatur veniam.
+            "Read Real Customer Reviews and Testimonials: Discover What People Are Saying About Our Products/Services and Their Experience with Our Company"
           </p>
         </div>
       </div>
@@ -540,9 +539,7 @@
           <h5 class="mb-3">Maria Smantha</h5>
           <!-- <h6 class="text-primary mb-3">Web Developer</h6> -->
           <p class="px-xl-3">
-            <i class="fas fa-quote-left pe-2"></i>Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit. Quod eos id officiis hic tenetur quae quaerat ad velit ab hic
-            tenetur.
+            <i class="fas fa-quote-left pe-2"></i>"I had a great experience with this healthcare provider. The staff were friendly and knowledgeable, and I felt like they really cared about my health and wellbeing. The facilities were clean and modern, and the appointments always started on time. I would definitely recommend this provider to anyone looking for high-quality healthcare services."
           </p>
           <ul class="list-unstyled d-flex justify-content-center mb-0">
             <li>
@@ -590,8 +587,7 @@
           <h5 class="mb-3">Lisa Cudrow</h5>
           <!-- <h6 class="text-primary mb-3">Graphic Designer</h6> -->
           <p class="px-xl-3">
-            <i class="fas fa-quote-left pe-2"></i>Ut enim ad minima veniam, quis nostrum
-            exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid commodi.
+            <i class="fas fa-quote-left pe-2"></i>"I've been a patient with this healthcare provider for several years, and I've always been impressed with the level of care I receive. The doctors are highly skilled and knowledgeable, and they take the time to listen to my concerns and answer my questions. The staff are also very helpful and friendly. I feel like I'm in good hands with this provider."
           </p>
           <ul class="list-unstyled d-flex justify-content-center mb-0">
             <li>
@@ -639,8 +635,7 @@
           <h5 class="mb-3">John Smith</h5>
           <!-- <h6 class="text-primary mb-3">Marketing Specialist</h6> -->
           <p class="px-xl-3">
-            <i class="fas fa-quote-left pe-2"></i>At vero eos et accusamus et iusto odio
-            dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
+            <i class="fas fa-quote-left pe-2"></i>"I recently had to visit the emergency room at this hospital, and I was blown away by the level of care I received. The doctors and nurses were incredibly attentive and responsive, and they made sure I was comfortable and well-informed throughout the entire process. Despite the stressful situation, I felt confident and safe in their hands. I'm so grateful for their expertise and compassion."
           </p>
           <ul class="list-unstyled d-flex justify-content-center mb-0">
             <li>
