@@ -63,7 +63,8 @@ def signup(request):
 
             myuser.save()
 
-            messages.success(request,"Hello "+ fname +", your account has been successfully created !!!")
+            # messages.success(request,"Hello "+ fname +", your account has been successfully created !!!")
+            print("Hello "+ fname +", your account has been successfully created !!!")
 
             user=authenticate(username=username, password=password)         
             #this will return a not none value is the user is authenticated otherwise it returns none if the user have entered the wrong credentials"""
