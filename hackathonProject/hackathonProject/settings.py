@@ -35,7 +35,16 @@ SECRET_KEY = 'django-insecure-xp=h=on8c0&s)#90hcd$+6wb3d-n3*_z$yjmjna59or5l#l)o9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'hackathon-project-hahj.onrender.com',
+    # Add other domains if needed
+]
+
+# Add your deployed domain to CSRF_TRUSTED_ORIGINS
+CSRF_TRUSTED_ORIGINS = [
+    'https://hackathon-project-hahj.onrender.com',
+    # Add other trusted origins if needed
+]
 
 
 # Application definition
